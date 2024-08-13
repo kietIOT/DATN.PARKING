@@ -1,15 +1,13 @@
-﻿using Castle.Core.Resource;
+﻿using DATN.PARKING.DLL.Models.DbTable;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
-using TCIS.TTOS.Commons;
-using TCIS.TTOS.EDI.DAL.Models.DbTable;
 
 namespace TCIS.TTOS.EDI.DAL
 {
     public class TtosEDIContext : DbContext, ITtosEDIContext
     {
-        public DbSet<EdiCoparnMsgIntf> EdiCoparnMsgIntfs { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
 
         public TtosEDIContext()
@@ -40,7 +38,7 @@ namespace TCIS.TTOS.EDI.DAL
 
         private ModelBuilder SequenceConfiguration(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EdiCoparnMsgIntf>(i => { i.HasKey(s => new { s.Id }); });
+            //modelBuilder.Entity<EdiCoparnMsgIntf>(i => { i.HasKey(s => new { s.Id }); });
    
     
             return modelBuilder;
@@ -66,7 +64,7 @@ namespace TCIS.TTOS.EDI.DAL
         {
             if (property.Metadata.ClrType.Name == "String")
             {
-                property.CurrentValue = property.CurrentValue.TrimEx().IsNullOrEmpty() ? string.Empty : property.CurrentValue.TrimEx();
+                //property.CurrentValue = property.CurrentValue.TrimEx().IsNullOrEmpty() ? string.Empty : property.CurrentValue.TrimEx();
             }
         }
     }

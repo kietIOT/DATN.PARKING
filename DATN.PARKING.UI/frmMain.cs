@@ -16,5 +16,15 @@ namespace DATN.PARKING.UI
         {
             InitializeComponent();
         }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lbDateTime.Text = DateTime.Now.ToString("dd-mm-yyyy HH:mm:ss");
+        }
     }
 }
