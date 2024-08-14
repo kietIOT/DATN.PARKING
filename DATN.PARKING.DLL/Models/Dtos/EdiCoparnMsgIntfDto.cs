@@ -1,4 +1,4 @@
-﻿namespace TCIS.TTOS.EDI.DAL
+﻿namespace DATN.PARKING.DLL
 {
     public class EdiCoparnMsgIntfDto
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TCIS.TTOS.EDI.DAL
+﻿namespace DATN.PARKING.DLL
 {
     public abstract class Either<L, R>
     {

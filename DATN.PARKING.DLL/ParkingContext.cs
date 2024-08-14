@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection;
 
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
-    public class TtosEDIContext : DbContext, ITtosEDIContext
+    public class ParkingContext : DbContext, ITtosEDIContext
     {
         public DbSet<Account> Accounts { get; set; }
 
 
-        public TtosEDIContext()
+        public ParkingContext()
         {
 
         }
 
-        public TtosEDIContext(DbContextOptions<TtosEDIContext> options) : base(options)
+        public ParkingContext(DbContextOptions<ParkingContext> options) : base(options)
         {
         }
 

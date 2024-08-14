@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
     public class UnitOfWork<TContext> : IUnitOfWork<TContext>, IDisposable
                  where TContext : DbContext, new()
     {
 
-        private readonly ILogger<TtosEDIContext> _logger;
+        private readonly ILogger<ParkingContext> _logger;
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
         private bool _disposed;
 
@@ -23,7 +23,7 @@ namespace TCIS.TTOS.EDI.DAL
 
         //private Dictionary<string, object> _repositories;
 
-        public UnitOfWork(ILogger<TtosEDIContext> logger, TtosEDIContext context)
+        public UnitOfWork(ILogger<ParkingContext> logger, ParkingContext context)
         {
             Context = context;
             _logger = logger;
@@ -58,7 +58,7 @@ namespace TCIS.TTOS.EDI.DAL
 
         #region IUnitOfWork<TContext> Members
 
-        public TtosEDIContext Context { get; }
+        public ParkingContext Context { get; }
 
         public void BeginTransaction()
         {

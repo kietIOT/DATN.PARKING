@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
     // danke schoen https://codereview.stackexchange.com/a/98736
     public class DataReaderMapper<T>

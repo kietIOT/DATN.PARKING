@@ -1,23 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using TCIS.TTOS.Commons;
-
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
     public class GenericRepository<T> : IGenericRepository<T>, IDisposable
                  where T : class
     {
         private bool _isDisposed;
-        private readonly ILogger<TtosEDIContext> _logger;
-        internal TtosEDIContext context;
+        private readonly ILogger<ParkingContext> _logger;
+        internal ParkingContext context;
         internal DbSet<T> Entities;
-        public GenericRepository(TtosEDIContext context, ILogger<TtosEDIContext> logger)
+        public GenericRepository(ParkingContext context, ILogger<ParkingContext> logger)
         {
             this.context = context;
             this.Entities = context.Set<T>();

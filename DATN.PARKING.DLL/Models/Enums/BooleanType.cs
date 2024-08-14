@@ -15,10 +15,9 @@
 // 28/05/2013   1.0.0.0                         DVDUOC      Created
 // </history>
 
-using System;
-using TCIS.TTOS.Commons;
+using DATN.PARKING.DLL.Models.Enums;
 
-namespace TCIS.TTOS.EDI.DAL.Models
+namespace DATN.PARKING.DLL.Models
 {
     /// <summary>
     /// BooleanType type defines bool values as it storaged in database 

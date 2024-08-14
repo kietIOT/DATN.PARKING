@@ -1,4 +1,4 @@
-﻿namespace TCIS.TTOS.EDI.DAL.Models.Enums
+﻿namespace DATN.PARKING.DLL.Models.Enums
 {
     /// <summary>
     /// The class includes all comment code constant defined in project 

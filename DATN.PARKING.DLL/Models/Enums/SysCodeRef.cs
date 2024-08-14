@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TCIS.TTOS.EDI.DAL.Models.Enums
+﻿namespace DATN.PARKING.DLL.Models.Enums
 {
     public sealed class SysCodeRef : StringEnumClass
     {

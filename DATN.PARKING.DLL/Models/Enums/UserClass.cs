@@ -1,4 +1,4 @@
-﻿namespace TCIS.TTOS.EDI.DAL.Models.Enums
+﻿namespace DATN.PARKING.DLL.Models.Enums
 {
     /// <summary>
     /// Seal type defien the type of Seal wich container belong to:

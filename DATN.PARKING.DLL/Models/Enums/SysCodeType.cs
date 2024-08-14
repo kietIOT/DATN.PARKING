@@ -1,4 +1,4 @@
-﻿namespace TCIS.TTOS.EDI.DAL.Models.Enums
+﻿namespace DATN.PARKING.DLL.Models.Enums
 {
     /// <summary>
     /// The class includes all Sys Code constant defined in project 

@@ -1,4 +1,4 @@
-﻿namespace TCIS.TTOS.EDI.DAL.Models.Enums
+﻿namespace DATN.PARKING.DLL.Models.Enums
 {
     public abstract class StringEnumClass : System.Object
     {

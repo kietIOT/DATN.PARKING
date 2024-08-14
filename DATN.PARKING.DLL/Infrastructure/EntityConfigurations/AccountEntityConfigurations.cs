@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TCIS.TTOS.EDI.DAL.Infrastructure.EntityConfigurations
+namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
 {
     public class AccountEntityConfigurations : IEntityTypeConfiguration<Account>
     {

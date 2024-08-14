@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
     public interface IUnitOfWork<out TContext>
             where TContext : DbContext, new()
     {
-        TtosEDIContext Context { get; }
+        ParkingContext Context { get; }
 
         void BeginTransaction();
 

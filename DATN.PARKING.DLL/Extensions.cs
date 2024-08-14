@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DATN.PARKING.DLL;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Diagnostics;
-using Oracle.ManagedDataAccess.Client;
-using TCIS.TTOS.Commons;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static NRules.RuleModel.Builders.RuleTransformation;
 
-namespace TCIS.TTOS.EDI.DAL
+namespace DATN.PARKING.DLL
 {
 
     public static partial class Util
@@ -158,8 +153,7 @@ namespace TCIS.TTOS.EDI.DAL
                 return nextSequenceValue;
             }
         }
-        public static string ToEDOCustomerName(this string customerName) => customerName.TrimEx().Replace("\r\n", "").Replace("\n", "").Replace("\t", "").DeleteSingleQuote()
-                                                                           .SubstringEx(0, GlobalSettings.MaxLengthConsignee).TrimEx();
+
         public static string ToEDOSecureCode(this string secureCode) => secureCode.TrimEx().Replace("\r\n", "").Replace("\n", "").DeleteSingleQuote();
     }
 
