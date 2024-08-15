@@ -29,7 +29,7 @@ namespace DATN.PARKING.UIUX
             lstVehicleType.Add(1, "Xe máy");
             lstVehicleType.Add(2, "Xe đạp");
 
-            lookVehicleType.Properties.DataSource = lstVehicleType; 
+            //lookVehicleType.Properties.DataSource = lstVehicleType; 
         }
     }
 }

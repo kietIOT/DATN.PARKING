@@ -8,8 +8,8 @@ namespace DATN.PARKING.DLL
     public class ParkingContext : DbContext, ITtosEDIContext
     {
         public DbSet<Account> Accounts { get; set; }
-
-
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public ParkingContext()
         {
 
