@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DATN.PARKING.UI
+namespace DATN.PARKING.UIUX
 {
     public partial class frmLogin : Form
     {
@@ -19,6 +19,7 @@ namespace DATN.PARKING.UI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            
             var frm = new frmMain();
             frm.ShowDialog();
         }

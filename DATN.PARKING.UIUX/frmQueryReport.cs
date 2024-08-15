@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DATN.PARKING.UI
+namespace DATN.PARKING.UIUX
 {
-    public partial class frmQueryInfomation : Form
+    public partial class frmQueryReport : Form
     {
-        public frmQueryInfomation()
+        public frmQueryReport()
         {
             InitializeComponent();
         }

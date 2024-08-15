@@ -1,4 +1,4 @@
-﻿namespace DATN.PARKING.UI
+﻿namespace DATN.PARKING.UIUX
 {
     partial class frmLogin
     {
