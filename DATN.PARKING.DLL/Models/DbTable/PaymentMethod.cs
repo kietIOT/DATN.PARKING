@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace DATN.PARKING.DLL.Models.DbTable
 {
-    public class Account
+    public class PaymentMethod
     {
-        public int Id {get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-
+        public int PaymentMethodId { get; set; }
+        public string PhuongThucThanhToan { get; set; }
     }
 }

@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DATN.PARKING.SERVICE\DATN.PARKING.SERVICE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>

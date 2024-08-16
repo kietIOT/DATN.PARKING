@@ -54,7 +54,8 @@ namespace DATN.PARKING.UIUX
 
         private void cmtReport_Click(object sender, EventArgs e)
         {
-
+            var frm = new frmQueryReport();
+            frm.ShowDialog();
         }
 
         private void cmtLogout_Click(object sender, EventArgs e)

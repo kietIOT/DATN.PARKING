@@ -8,15 +8,10 @@ namespace DATN.PARKING.DLL.Models.DbTable
 {
     public class Information
     {
-        public int Id {get; set; }
-        public string BienSo { get; set; }
-        public string HoVaTen { get; set; }
-        public string DiaChi { get; set; }
-        public DateTime NgayRa { get; set; }
-        public DateTime NgayVao { get; set; }
-        public string LoaiPhuongTien { get; set; }
-        public string PhuongThucThanhToan {  get; set; }
-        public string Flg {  get; set; }
-
+        public int InfomationId {get; set; }
+        public Customer KhachHang { get; set; }
+        public Vehicle PhuongTien { get; set; }
+        public PaymentMethod PhuongThucThanhToan {  get; set; }
+        public Payment ThanhToan { get; set; }
     }
 }

@@ -17,10 +17,7 @@ namespace DATN.PARKING.UIUX
             InitializeComponent();
         }
 
-        private void lookVehicleType_EditValueChanged(object sender, EventArgs e)
-        {
-            
-        }
+       
 
         private void frmQueryInfo_Load(object sender, EventArgs e)
         {

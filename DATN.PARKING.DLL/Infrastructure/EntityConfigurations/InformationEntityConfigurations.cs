@@ -12,61 +12,103 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
 
             entity.ToTable("INFORMATION");
 
-            entity.HasIndex(e => e.Id, "AGENT_IDX1");
+            entity.HasIndex(e => e.InfomationId, "AGENT_IDX1");
 
 
 
-            entity.Property(e => e.BienSo)
+            entity.Property(e => e.KhachHang.HoVaTen)
+               .HasMaxLength(50)
+               .IsUnicode(false)
+               .HasColumnName("HO_VA_TEN")
+               .HasDefaultValueSql("' ' ");
+
+            entity.Property(e => e.KhachHang.SoDienThoai)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("BIEN_SO")
-                .HasDefaultValueSql("' ' ");
-
-            entity.Property(e => e.HoVaTen)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("HO_VA_TEN")
+                .HasColumnName("SO_DIEN_THOAI")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
-            entity.Property(e => e.DiaChi)
-                .HasMaxLength(200)
+            entity.Property(e => e.KhachHang.Email)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("EMAIL")
+                .HasDefaultValueSql("' ' ");
+
+            entity.Property(e => e.KhachHang.LoaiThanhVien)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("LOAI_THANH_VIEN")
+                .HasDefaultValueSql("' ' ")
+                .IsFixedLength();
+
+            entity.Property(e => e.KhachHang.Diem)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("DIEM")
+                .HasDefaultValueSql("' ' ")
+                .IsFixedLength();
+
+            entity.Property(e => e.KhachHang.DiaChi)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("DIA_CHI")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
-            entity.Property(e => e.NgayRa)
+
+            entity.Property(e => e.KhachHang.NgayDangKy)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("NGAY_DANG_KY")
+                .HasDefaultValueSql("' ' ")
+                .IsFixedLength();
+            entity.Property(e => e.PhuongTien.TenPhuongTien)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("TEN_PHUONG_TIEN")
+                .HasDefaultValueSql("' ' ");
+
+            entity.Property(e => e.PhuongTien.BienSoXe)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("BIEN_SO_XE")
+                .HasDefaultValueSql("' ' ")
+                .IsFixedLength();
+            entity.Property(e => e.PhuongTien.NgayRa)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NGAY_RA")
-                .HasDefaultValueSql("' ' ")
-                .IsFixedLength();
-            entity.Property(e => e.NgayVao)
+                .HasDefaultValueSql("' ' ");
+
+            entity.Property(e => e.PhuongTien.NgayVao)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NGAY_VAO")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
-            entity.Property(e => e.LoaiPhuongTien)
+
+            entity.Property(e => e.PhuongTien.Status)
+               .HasMaxLength(50)
+               .IsUnicode(false)
+               .HasColumnName("STATUS")
+               .HasDefaultValueSql("' ' ")
+               .IsFixedLength();
+
+            entity.Property(e => e.PhuongThucThanhToan.PhuongThucThanhToan)
+               .HasMaxLength(50)
+               .IsUnicode(false)
+               .HasColumnName("PHUONG_THUC_THANH_TOAN")
+               .HasDefaultValueSql("' ' ");
+            entity.Property(e => e.ThanhToan.TienTra)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("LOAI_PHUONG_TIEN")
+                .HasColumnName("TIEN_TRA")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
-            entity.Property(e => e.PhuongThucThanhToan)
+            entity.Property(e => e.ThanhToan.TienKhachTra)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("PHUONG_THUC_THANH_TOAN")
-                .HasDefaultValueSql("' ' ")
-                .IsFixedLength();
-            entity.Property(e => e.Flg)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .HasColumnName("FLG")
-                .HasDefaultValueSql("' ' ")
-                .IsFixedLength();
-
-
-
+                .HasColumnName("TIEN_KHACH_TRA")
+                .HasDefaultValueSql("' ' ");
         }
     }
 }

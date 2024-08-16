@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DATN.PARKING.DLL\DATN.PARKING.DLL.csproj" />
+  </ItemGroup>
+
 </Project>

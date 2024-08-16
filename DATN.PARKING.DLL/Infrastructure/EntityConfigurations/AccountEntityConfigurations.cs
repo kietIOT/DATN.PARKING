@@ -10,22 +10,22 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
         {
             entity.HasNoKey();
 
-            entity.ToTable("Account");
+            entity.ToTable("ACCOUNT");
 
-            entity.HasIndex(e => e.id, "AGENT_IDX1");
+            entity.HasIndex(e => e.Id, "AGENT_IDX1");
 
 
 
             entity.Property(e => e.UserName)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("UserName")
+                .HasColumnName("USER_NAME")
                 .HasDefaultValueSql("' ' ");
 
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("PassWord")
+                .HasColumnName("PASSWORD")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
 

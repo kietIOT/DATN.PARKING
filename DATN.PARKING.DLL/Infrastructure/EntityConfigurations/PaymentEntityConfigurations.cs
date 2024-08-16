@@ -12,11 +12,11 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
 
             entity.ToTable("PAYMENT");
 
-            entity.HasIndex(e => e.Id, "AGENT_IDX1");
+            entity.HasIndex(e => e.PaymentId, "AGENT_IDX1");
 
 
 
-            entity.Property(e => e.PhuongThucThanhToan)
+            entity.Property(e => e.PhuongThucThanhToan.PhuongThucThanhToan)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("PHUONG_THUC_THANH_TOAN")
@@ -34,13 +34,18 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
                 .HasColumnName("TIEN_KHACH_TRA")
                 .HasDefaultValueSql("' ' ");
 
-            entity.Property(e => e.PhuongTien)
+            entity.Property(e => e.PhuongTien.TenPhuongTien)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("PHUONG_TIEN")
-                .HasDefaultValueSql("' ' ")
-                .IsFixedLength();
+                .HasColumnName("TEN_PHUONG_TIEN")
+                .HasDefaultValueSql("' ' ");
+
+        
+    
          
+
+     
+
 
 
         }

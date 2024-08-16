@@ -10,6 +10,10 @@ namespace DATN.PARKING.DLL
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Information> Informations { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Pricing> Pricings { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
         public ParkingContext()
         {
 
