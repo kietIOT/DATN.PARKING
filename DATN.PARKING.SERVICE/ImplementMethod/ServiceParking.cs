@@ -28,10 +28,10 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 {
                     throw new Exception("Thông tin phương tiện không tồn tại.");
                 }
-                var parkingDuration = vehicleInfo.PhuongTien.NgayRa - vehicleInfo.PhuongTien.NgayVao;
+                var parkingDuration = vehicleInfo.NgayRa - vehicleInfo.NgayVao;
                 var totalHours = parkingDuration.TotalHours;
 
-                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.PhuongTien.TenPhuongTien == vehicleInfo.PhuongTien.TenPhuongTien);
+                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.TenPhuongTien == vehicleInfo.TenPhuongTien);
                 if (pricing == null)
                 {
                     throw new Exception("Không có thông tin giá cho loại phương tiện này.");
@@ -142,7 +142,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                var vehicleInfo = _unitOfWork.Context.Informations.FirstOrDefault(info => info.ThanhToan.PaymentId == payment.PaymentId);
+                var vehicleInfo = _unitOfWork.Context.Informations.FirstOrDefault(info => info.PaymentId == payment.PaymentId);
                 if (vehicleInfo == null)
                 {
                     throw new Exception("Thông tin phương tiện không tồn tại.");
@@ -159,11 +159,11 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
 
                 // Bước 4: Lưu thông tin thanh toán vào cơ sở dữ liệu
                 payment.TienTra = totalAmount;
-                payment.PhuongTien.NgayRa = DateTime.Now;  // Ngày thanh toán
+                payment.NgayRa = DateTime.Now;  // Ngày thanh toán
                 _unitOfWork.Context.Payments.Add(payment);
 
                 // Cập nhật trạng thái phương tiện
-                vehicleInfo.PhuongTien.Status = "Y"; // Hoặc một trạng thái khác để đánh dấu phương tiện đã thanh toán
+                vehicleInfo.Status = "Y"; // Hoặc một trạng thái khác để đánh dấu phương tiện đã thanh toán
                 _unitOfWork.Context.Informations.Update(vehicleInfo);
 
 
@@ -206,7 +206,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             try
             {
                 // Kiểm tra xem biển số xe đã tồn tại trong bãi chưa và chưa rời khỏi bãi
-                var existingVehicle = _unitOfWork.Context.Informations.FirstOrDefault(i => i.PhuongTien.BienSoXe == info.PhuongTien.BienSoXe && i.PhuongTien.Status != "Y");
+                var existingVehicle = _unitOfWork.Context.Informations.FirstOrDefault(i => i.BienSoXe == info.BienSoXe && i.Status != "Y");
 
                 if (existingVehicle != null)
                 {
@@ -214,8 +214,8 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 }
 
                 // Thiết lập ngày vào bãi và trạng thái của phương tiện
-                info.PhuongTien.NgayVao = DateTime.Now;
-                info.PhuongTien.Status = "Y"; // Gắn cờ rằng xe đã vào bãi
+                info.NgayVao = DateTime.Now;
+                info.Status = "Y"; // Gắn cờ rằng xe đã vào bãi
 
                 // Đăng ký thông tin phương tiện mới vào cơ sở dữ liệu
                 _unitOfWork.Context.Informations.Add(info);
@@ -232,7 +232,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                var existingPricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.PhuongTien.VehicleId == pricing.PhuongTien.VehicleId);
+                var existingPricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.VehicleId == pricing.VehicleId);
                 if (existingPricing != null)
                 {
                     throw new Exception("Giá cho loại phương tiện này đã tồn tại.");

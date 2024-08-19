@@ -1,18 +1,41 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using DATN.PARKING.SERVICE.ImplementMethod;
+using DATN.PARKING.SERVICE.InterfaceMethod;
+using OpenCvSharp;
 namespace DATN.PARKING.UIUX
 {
     public partial class frmMain : Form
     {
+        private readonly IPlateRecognitonService _serviceRecgPlate;
+
         public frmMain()
         {
             InitializeComponent();
         }
+        public frmMain(IPlateRecognitonService serviceRecgPlate)
+        {
+            _serviceRecgPlate = serviceRecgPlate;
+        }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            var capture = new VideoCapture(0); // 0 is the default camera
+            Mat frame = new Mat();
+            capture.Read(frame);
+            try
+            {
+                // Recognize the plate
+                string plateText = _serviceRecgPlate.RecognizePlate(frame);
+                Console.WriteLine($"Detected Plate Text: {plateText}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
 
+            // Release the camera
+            capture.Release();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
