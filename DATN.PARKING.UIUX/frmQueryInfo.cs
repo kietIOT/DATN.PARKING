@@ -1,32 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using DATN.PARKING.DLL;
+using DATN.PARKING.SERVICE.ImplementMethod;
 
 namespace DATN.PARKING.UIUX
 {
     public partial class frmQueryInfo : Form
     {
+        private readonly ServiceParking _service;
+        public frmQueryInfo(ServiceParking service)
+        {
+            _service = service;
+        }
         public frmQueryInfo()
         {
             InitializeComponent();
         }
 
-       
 
         private void frmQueryInfo_Load(object sender, EventArgs e)
         {
-            Dictionary<int, string> lstVehicleType = new Dictionary<int, string>();
-            lstVehicleType.Add(0, "Ô tô");
-            lstVehicleType.Add(1, "Xe máy");
-            lstVehicleType.Add(2, "Xe đạp");
+            try
+            {
+                var lstVehicleType = _service.GetAllVehicleType();
+                lookVehicleType.Properties.DataSource = lstVehicleType;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
-            //lookVehicleType.Properties.DataSource = lstVehicleType; 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dtGateIn.DateTime >= dtGateOut.DateTime)
+                {
+                    MessageBox.Show("Khoảng thời gian không hợp lệ. Vui lòng nhập lại !", "Cảnh Báo",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                gridData.DataSource = null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

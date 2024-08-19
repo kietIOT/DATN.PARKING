@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DATN.PARKING.DLL\DATN.PARKING.DLL.csproj" />
+    <ProjectReference Include="..\DATN.PARKING.SERVICE\DATN.PARKING.SERVICE.csproj" />
   </ItemGroup>
 
 </Project>

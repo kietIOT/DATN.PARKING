@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DATN.PARKING.DLL\DATN.PARKING.DLL.csproj" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
   </ItemGroup>
 
 </Project>

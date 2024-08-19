@@ -61,7 +61,7 @@ namespace DATN.PARKING.UIUX
         private void cmtLogout_Click(object sender, EventArgs e)
         {
             this.Close();
-            var frm = new frmLogin();
+            var frm = new frmLogin(null);
             frm.ShowDialog();
         }
     }

@@ -1,8 +1,9 @@
 ﻿using DATN.PARKING.DLL.Models.DbTable;
+using DATN.PARKING.DLL.Models.Dtos;
 
 namespace DATN.PARKING.SERVICE.InterfaceMethod
 {
-    interface IServiceParking
+    public interface IServiceParking
     {
         bool Login(string userName, string password); // đăng nhập
 
@@ -10,6 +11,7 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
         #region Quản lý phương tiện (Vehicle Management)
         void RegisterVehicle(Information info); //Đăng ký thông tin phương tiện khi vào bãi.
         void UpdateVehicleInformation(int infoId, Information updatedInfo); // Cập nhật thông tin phương tiện.
+        List<string> GetAllVehicleType();
         #endregion
 
         #region Quản lý thanh toán (Payment Management)
@@ -41,7 +43,7 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
         #region Báo cáo khách hàng: Thống kê khách hàng theo loại thành viên, điểm tích lũy, lượng đặt chỗ.
         #endregion
-
+        List<ViewInformationCustomer> GetAllInfomationCustomer(DateTime ngayra, DateTime ngayvao, string cccd, string name, string biensoxe, string loaixe);
         #region 
         #endregion
 

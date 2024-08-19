@@ -1,5 +1,6 @@
 ﻿using DATN.PARKING.DLL;
 using DATN.PARKING.DLL.Models.DbTable;
+using DATN.PARKING.DLL.Models.Dtos;
 using DATN.PARKING.SERVICE.InterfaceMethod;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -68,6 +69,30 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
+            }
+        }
+
+        public List<ViewInformationCustomer> GetAllInfomationCustomer(DateTime ngayra, DateTime ngayvao, string cccd, string name, string biensoxe, string loaixe)
+        {
+            try
+            {
+                return null;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public List<string> GetAllVehicleType()
+        {
+            try
+            {
+                return _unitOfWork.Context.Vehicles.Select(c=>c.TenPhuongTien).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 

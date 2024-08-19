@@ -16,27 +16,27 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
 
 
 
-            entity.Property(e => e.PhuongTien.TenPhuongTien)
+            entity.Property(e => e.TenPhuongTien)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("TEN_PHUONG_TIEN")
                 .HasDefaultValueSql("' ' ");
 
 
-            entity.Property(e => e.PhuongTien.NgayRa)
+            entity.Property(e => e.NgayRa)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NGAY_RA")
                 .HasDefaultValueSql("' ' ");
 
-            entity.Property(e => e.PhuongTien.NgayVao)
+            entity.Property(e => e.NgayVao)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NGAY_VAO")
                 .HasDefaultValueSql("' ' ")
                 .IsFixedLength();
 
-            entity.Property(e => e.PhuongTien.Status)
+            entity.Property(e => e.Status)
                .HasMaxLength(50)
                .IsUnicode(false)
                .HasColumnName("STATUS")

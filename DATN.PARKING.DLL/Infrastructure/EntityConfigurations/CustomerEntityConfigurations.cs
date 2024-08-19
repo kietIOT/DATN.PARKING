@@ -22,6 +22,12 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
                 .HasColumnName("HO_VA_TEN")
                 .HasDefaultValueSql("' ' ");
 
+            entity.Property(e => e.CCCD)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("CCCD")
+                .HasDefaultValueSql("' ' ");
+
             entity.Property(e => e.SoDienThoai)
                 .HasMaxLength(50)
                 .IsUnicode(false)
