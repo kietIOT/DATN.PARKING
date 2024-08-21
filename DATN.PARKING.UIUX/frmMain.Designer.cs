@@ -516,12 +516,12 @@
             // 
             // lbDateTime
             // 
-            lbDateTime.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbDateTime.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbDateTime.ForeColor = Color.FromArgb(255, 128, 0);
-            lbDateTime.Location = new Point(418, 12);
+            lbDateTime.Location = new Point(519, 0);
             lbDateTime.Margin = new Padding(4, 0, 4, 0);
             lbDateTime.Name = "lbDateTime";
-            lbDateTime.Size = new Size(450, 28);
+            lbDateTime.Size = new Size(349, 40);
             lbDateTime.TabIndex = 3;
             lbDateTime.Text = "TIME";
             // 
@@ -552,6 +552,7 @@
             // timer1
             // 
             timer1.Enabled = true;
+            timer1.Tick += timer1_Tick;
             // 
             // frmMain
             // 

@@ -20,27 +20,12 @@ namespace DATN.PARKING.UIUX
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            var capture = new VideoCapture(0); // 0 is the default camera
-            Mat frame = new Mat();
-            capture.Read(frame);
-            try
-            {
-                // Recognize the plate
-                string plateText = _serviceRecgPlate.RecognizePlate(frame);
-                Console.WriteLine($"Detected Plate Text: {plateText}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
-
-            // Release the camera
-            capture.Release();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            lbDateTime.Text = DateTime.Now.ToString("dd-mm-yyyy HH:mm:ss");
+            lbDateTime.Text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            
         }
 
         private void btnAuto_CheckedChanged(object sender, EventArgs e)

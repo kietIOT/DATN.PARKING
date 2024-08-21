@@ -9,6 +9,6 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 {
     public interface IPlateRecognitonService
     {
-        string RecognizePlate(Mat frame);
+        
     }
 }

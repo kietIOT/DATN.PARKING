@@ -13,6 +13,7 @@ namespace DATN.PARKING.DLL.Models.DbTable
         public double TienTra { get; set; }
         public double TienKhachTra { get; set; }
         public string TenPhuongTien {  get; set; }
+        public DateTime NgayThanhToan { get; set; }
 
     }
 }

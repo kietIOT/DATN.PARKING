@@ -32,9 +32,9 @@
             label7 = new Label();
             label6 = new Label();
             label4 = new Label();
-            dateEdit2 = new DevExpress.XtraEditors.DateEdit();
-            dateEdit1 = new DevExpress.XtraEditors.DateEdit();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            dtToDate = new DevExpress.XtraEditors.DateEdit();
+            dtFromDate = new DevExpress.XtraEditors.DateEdit();
+            grvData = new DevExpress.XtraGrid.GridControl();
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -47,11 +47,11 @@
             label3 = new Label();
             btnSearch = new Button();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dateEdit2.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit2.Properties.CalendarTimeProperties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties.CalendarTimeProperties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtToDate.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtToDate.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)grvData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lookVehicleType.Properties).BeginInit();
             SuspendLayout();
@@ -61,9 +61,9 @@
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(dateEdit2);
-            panel1.Controls.Add(dateEdit1);
-            panel1.Controls.Add(gridControl1);
+            panel1.Controls.Add(dtToDate);
+            panel1.Controls.Add(dtFromDate);
+            panel1.Controls.Add(grvData);
             panel1.Controls.Add(lookVehicleType);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(btnSearch);
@@ -102,40 +102,40 @@
             label4.TabIndex = 18;
             label4.Text = "Từ ngày";
             // 
-            // dateEdit2
+            // dtToDate
             // 
-            dateEdit2.EditValue = null;
-            dateEdit2.Location = new Point(104, 96);
-            dateEdit2.Name = "dateEdit2";
-            dateEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit2.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit2.Size = new Size(100, 20);
-            dateEdit2.TabIndex = 17;
+            dtToDate.EditValue = null;
+            dtToDate.Location = new Point(104, 96);
+            dtToDate.Name = "dtToDate";
+            dtToDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dtToDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dtToDate.Size = new Size(100, 20);
+            dtToDate.TabIndex = 17;
             // 
-            // dateEdit1
+            // dtFromDate
             // 
-            dateEdit1.EditValue = null;
-            dateEdit1.Location = new Point(104, 56);
-            dateEdit1.Name = "dateEdit1";
-            dateEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit1.Size = new Size(100, 20);
-            dateEdit1.TabIndex = 16;
+            dtFromDate.EditValue = null;
+            dtFromDate.Location = new Point(104, 56);
+            dtFromDate.Name = "dtFromDate";
+            dtFromDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dtFromDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dtFromDate.Size = new Size(100, 20);
+            dtFromDate.TabIndex = 16;
             // 
-            // gridControl1
+            // grvData
             // 
-            gridControl1.Dock = DockStyle.Bottom;
-            gridControl1.Location = new Point(0, 237);
-            gridControl1.MainView = gridView1;
-            gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(1011, 304);
-            gridControl1.TabIndex = 15;
-            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            grvData.Dock = DockStyle.Bottom;
+            grvData.Location = new Point(0, 237);
+            grvData.MainView = gridView1;
+            grvData.Name = "grvData";
+            grvData.Size = new Size(1011, 304);
+            grvData.TabIndex = 15;
+            grvData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
             gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn2, gridColumn3, gridColumn4, gridColumn5, gridColumn6, gridColumn7 });
-            gridView1.GridControl = gridControl1;
+            gridView1.GridControl = grvData;
             gridView1.Name = "gridView1";
             gridView1.OptionsFilter.InHeaderSearchMode = DevExpress.XtraGrid.Views.Grid.GridInHeaderSearchMode.TextSearch;
             // 
@@ -239,11 +239,11 @@
             Text = "frmQueryReport";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dateEdit2.Properties.CalendarTimeProperties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit2.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties.CalendarTimeProperties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dateEdit1.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtToDate.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtToDate.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)grvData).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)lookVehicleType.Properties).EndInit();
             ResumeLayout(false);
@@ -255,9 +255,9 @@
         private Label label7;
         private Label label6;
         private Label label4;
-        private DevExpress.XtraEditors.DateEdit dateEdit2;
-        private DevExpress.XtraEditors.DateEdit dateEdit1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
+        private DevExpress.XtraEditors.DateEdit dtToDate;
+        private DevExpress.XtraEditors.DateEdit dtFromDate;
+        private DevExpress.XtraGrid.GridControl grvData;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;

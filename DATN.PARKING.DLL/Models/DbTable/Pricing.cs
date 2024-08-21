@@ -9,6 +9,7 @@ namespace DATN.PARKING.DLL.Models.DbTable
     public class Pricing
     {
         public int PricingId { get; set; }
+        public int VehicleId { get; set; }
         public string TenPhuongTien { get; set; }
         public DateTime NgayRa { get; set; }
         public DateTime NgayVao { get; set; }

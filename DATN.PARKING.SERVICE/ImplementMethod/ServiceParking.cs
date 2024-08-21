@@ -105,7 +105,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.PhuongTien.TenPhuongTien == vehicleType);
+                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.TenPhuongTien == vehicleType);
 
                 if (pricing == null)
                 {
@@ -149,7 +149,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 }
 
                 // Bước 2: Tính tổng số tiền cần thanh toán
-                double totalAmount = CalculateTotalAmountForVehicle(vehicleInfo.PhuongTien.VehicleId);
+                double totalAmount = CalculateTotalAmountForVehicle(vehicleInfo.VehicleId);
 
                 // Bước 3: Kiểm tra số tiền khách hàng đã trả
                 if (payment.TienKhachTra < totalAmount)
@@ -159,7 +159,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
 
                 // Bước 4: Lưu thông tin thanh toán vào cơ sở dữ liệu
                 payment.TienTra = totalAmount;
-                payment.NgayRa = DateTime.Now;  // Ngày thanh toán
+                payment.NgayThanhToan = DateTime.Now;  // Ngày thanh toán
                 _unitOfWork.Context.Payments.Add(payment);
 
                 // Cập nhật trạng thái phương tiện

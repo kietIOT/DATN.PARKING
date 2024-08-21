@@ -17,12 +17,13 @@ namespace DATN.PARKING.UIUX
         {
             try
             {
-                if (!_service.Login(txtUsername.Text, txtPassword.Text))
+                //if (!_service.Login(txtUsername.Text, txtPassword.Text))
 
-                {
-                    MessageBox.Show("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                //{
+                //    MessageBox.Show("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    return;
+                //}
+                this.Hide();
                 var frm = new frmMain();
                 frm.ShowDialog();
             }
