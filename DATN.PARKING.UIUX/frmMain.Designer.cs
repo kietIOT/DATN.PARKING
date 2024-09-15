@@ -33,6 +33,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             picGateIn = new PictureBox();
             picGateOut = new PictureBox();
+            videoGateIn = new PictureBox();
+            videoGateOut = new PictureBox();
             panel2 = new Panel();
             btnAuto = new RadioButton();
             btnOpenGate = new Button();
@@ -73,6 +75,8 @@
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picGateIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picGateOut).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)videoGateIn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)videoGateOut).BeginInit();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
@@ -99,6 +103,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Controls.Add(picGateIn, 0, 0);
             tableLayoutPanel1.Controls.Add(picGateOut, 0, 1);
+            tableLayoutPanel1.Controls.Add(videoGateIn, 1, 0);
+            tableLayoutPanel1.Controls.Add(videoGateOut, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(271, 40);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -125,6 +131,24 @@
             picGateOut.Size = new Size(478, 373);
             picGateOut.TabIndex = 1;
             picGateOut.TabStop = false;
+            // 
+            // videoGateIn
+            // 
+            videoGateIn.Dock = DockStyle.Fill;
+            videoGateIn.Location = new Point(487, 3);
+            videoGateIn.Name = "videoGateIn";
+            videoGateIn.Size = new Size(478, 372);
+            videoGateIn.TabIndex = 2;
+            videoGateIn.TabStop = false;
+            // 
+            // videoGateOut
+            // 
+            videoGateOut.Dock = DockStyle.Fill;
+            videoGateOut.Location = new Point(487, 381);
+            videoGateOut.Name = "videoGateOut";
+            videoGateOut.Size = new Size(478, 373);
+            videoGateOut.TabIndex = 3;
+            videoGateOut.TabStop = false;
             // 
             // panel2
             // 
@@ -560,16 +584,20 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1239, 797);
             Controls.Add(panel1);
+            KeyPreview = true;
             Margin = new Padding(4, 3, 4, 3);
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Main";
             Load += frmMain_Load;
+            KeyDown += frmMain_KeyDown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picGateIn).EndInit();
             ((System.ComponentModel.ISupportInitialize)picGateOut).EndInit();
+            ((System.ComponentModel.ISupportInitialize)videoGateIn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)videoGateOut).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
@@ -623,5 +651,7 @@
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox picGateIn;
         private PictureBox picGateOut;
+        private PictureBox videoGateIn;
+        private PictureBox videoGateOut;
     }
 }
