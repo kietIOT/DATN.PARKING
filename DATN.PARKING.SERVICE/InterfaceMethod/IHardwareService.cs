@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DATN.PARKING.SERVICE.InterfaceMethod
 {
-    internal interface IHarwareService
+    public interface IHardwareService
     {
         void Servo(string gate,string status);
-
+        void HardwareServiceInit(string portName, int baudRate);
     }
 }

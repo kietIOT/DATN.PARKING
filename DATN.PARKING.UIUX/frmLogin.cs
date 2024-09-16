@@ -6,17 +6,19 @@ namespace DATN.PARKING.UIUX
     public partial class frmLogin : Form
     {
         private IServiceParking _service;
-      
-        public frmLogin(IServiceParking service)
+        private readonly IHardwareService _hardwareService;
+        public frmLogin(IServiceParking service, IHardwareService hardwareService)
         {
             InitializeComponent();
             _service = service;
+            _hardwareService = hardwareService;
         }
        
         private void btnLogin_Click(object sender, EventArgs e)
         {
             try
             {
+                
                 //if (!_service.Login(txtUsername.Text, txtPassword.Text))
 
                 //{
@@ -24,7 +26,7 @@ namespace DATN.PARKING.UIUX
                 //    return;
                 //}
                 this.Hide();
-                var frm = new frmMain();
+                var frm = new frmMain(_hardwareService);
                 frm.ShowDialog();
             }
             catch (Exception ex)

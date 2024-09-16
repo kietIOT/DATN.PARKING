@@ -43,7 +43,9 @@ namespace DATN.PARKING.UIUX
 
                     services.AddTransient<IUnitOfWork<ParkingContext>, UnitOfWork<ParkingContext>>();
                     services.AddTransient<IServiceParking, ServiceParking>();
+                    services.AddTransient<IHardwareService, HardwareService>();
                     services.AddTransient<frmLogin>();
+                    services.AddTransient<frmMain>();
                 });
         }
     }

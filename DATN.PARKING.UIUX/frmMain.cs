@@ -1,4 +1,5 @@
 ﻿using DATN.PARKING.SERVICE.ImplementMethod;
+using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
@@ -6,7 +7,7 @@ namespace DATN.PARKING.UIUX
 {
     public partial class frmMain : Form
     {
-        private readonly HardwareService _hardwareService;
+        private readonly IHardwareService _hardwareService;
 
         private VideoCapture _cameraGateIn;
         private VideoCapture _cameraGateOut;
@@ -14,15 +15,15 @@ namespace DATN.PARKING.UIUX
         private readonly object _lock = new object();
         private Mat _currentFrame;
 
-        public frmMain()
+      
+        public frmMain(IHardwareService hardwareService)
         {
             InitializeComponent();
-        }
-        public frmMain(HardwareService hardwareService)
-        {
-            _hardwareService = hardwareService;
-        }
 
+            _hardwareService = hardwareService;
+            _hardwareService.HardwareServiceInit("COM3", 9600);
+        }
+    
         private async void frmMain_Load(object sender, EventArgs e)
         {
             Label lbGateIn = new Label();
@@ -124,10 +125,6 @@ namespace DATN.PARKING.UIUX
                 }
             }
         }
-        
-
-
-
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -183,7 +180,7 @@ namespace DATN.PARKING.UIUX
         private void cmtLogout_Click(object sender, EventArgs e)
         {
             this.Close();
-            var frm = new frmLogin(null);
+            var frm = new frmLogin(null,null);
             frm.ShowDialog();
         }
 
@@ -202,7 +199,11 @@ namespace DATN.PARKING.UIUX
                     break;
 
                 case Keys.I:
-                    _hardwareService.Servo("GateIn", "Open");
+                    _hardwareService.Servo("GateIn", "open");
+                    break;
+
+                case Keys.O:
+                    _hardwareService.Servo("GateOut", "close");
                     break;
 
             }    
