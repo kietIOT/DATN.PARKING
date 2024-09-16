@@ -1,10 +1,12 @@
-﻿using OpenCvSharp;
+﻿using DATN.PARKING.SERVICE.ImplementMethod;
+using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
 namespace DATN.PARKING.UIUX
 {
     public partial class frmMain : Form
     {
+        private readonly HardwareService _hardwareService;
 
         private VideoCapture _cameraGateIn;
         private VideoCapture _cameraGateOut;
@@ -16,10 +18,10 @@ namespace DATN.PARKING.UIUX
         {
             InitializeComponent();
         }
-        //public frmMain(IPlateRecognitonService serviceRecgPlate)
-        //{
-        //    _serviceRecgPlate = serviceRecgPlate;
-        //}
+        public frmMain(HardwareService hardwareService)
+        {
+            _hardwareService = hardwareService;
+        }
 
         private async void frmMain_Load(object sender, EventArgs e)
         {
@@ -45,6 +47,7 @@ namespace DATN.PARKING.UIUX
 
             // Tạo một task để xử lý video trong background
             Task.Run(() => ProcessVideoCameraGateIn());
+            Task.Run(() => ProcessVideoCameraGateOut());
         }
         private void ProcessVideoCameraGateIn()
         {
@@ -192,11 +195,20 @@ namespace DATN.PARKING.UIUX
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F1) // Kiểm tra nếu phím cách được nhấn
+            switch (e.KeyCode)
             {
-                CaptureAndDisplayImage();
-            }
+                case Keys.Space:
+                    CaptureAndDisplayImage();
+                    break;
+
+                case Keys.I:
+                    _hardwareService.Servo("GateIn", "Open");
+                    break;
+
+            }    
+           
         }
+
         private void CaptureAndDisplayImage()
         {
             // Đọc khung hình hiện tại từ camera videoGateIn
