@@ -8,7 +8,7 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 {
     public interface IHardwareService
     {
-        void Servo(string gate,string status);
+        void Servo(string gate);
         void HardwareServiceInit(string portName, int baudRate);
     }
 }

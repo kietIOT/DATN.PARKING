@@ -18,31 +18,20 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 throw e;
             }
         }
-        public void Servo(string gate, string status)
+        public void Servo(string gate)
         {
             try
             {
                 switch (gate)
                 {
                     case "GateIn":
-                        if (serialPort.IsOpen && status == "open")
-                        {
-                            serialPort.Write("1"); // Gửi lệnh '1' để mở servo
-                        }
-                        else if (serialPort.IsOpen && status == "close")
-                        {
-                            serialPort.Write("2"); // Gửi lệnh '2' để đóng servo
-                        }
+                        
+                            serialPort.Write("opengatein"); // Gửi lệnh '1' để mở servo
                         break;
                     case "GateOut":
-                        if (serialPort.IsOpen && status == "open")
-                        {
-                            serialPort.Write("1"); // Gửi lệnh '3' để mở servo
-                        }
-                        else if (serialPort.IsOpen && status == "close")
-                        {
-                            serialPort.Write("2"); // Gửi lệnh '4' để đóng servo
-                        }
+                       
+                        
+                            serialPort.Write("opengateout"); // Gửi lệnh '2' để mở servo
                         break;
                     default:
                         break;

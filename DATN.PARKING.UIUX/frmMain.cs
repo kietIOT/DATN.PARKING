@@ -1,5 +1,4 @@
-﻿using DATN.PARKING.SERVICE.ImplementMethod;
-using DATN.PARKING.SERVICE.InterfaceMethod;
+﻿using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
@@ -199,11 +198,11 @@ namespace DATN.PARKING.UIUX
                     break;
 
                 case Keys.I:
-                    _hardwareService.Servo("GateIn", "open");
+                    _hardwareService.Servo("GateIn");
                     break;
 
                 case Keys.O:
-                    _hardwareService.Servo("GateOut", "close");
+                    _hardwareService.Servo("GateOut");
                     break;
 
             }    
