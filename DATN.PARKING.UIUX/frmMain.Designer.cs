@@ -53,7 +53,7 @@
             txtAmount = new Label();
             label10 = new Label();
             panel3 = new Panel();
-            textBox1 = new TextBox();
+            txtNhapBienSo = new TextBox();
             btnNhapBien = new Button();
             txtBienSoRa = new Label();
             label9 = new Label();
@@ -380,7 +380,7 @@
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(textBox1);
+            panel3.Controls.Add(txtNhapBienSo);
             panel3.Controls.Add(btnNhapBien);
             panel3.Location = new Point(14, 288);
             panel3.Margin = new Padding(4, 3, 4, 3);
@@ -388,13 +388,13 @@
             panel3.Size = new Size(240, 31);
             panel3.TabIndex = 7;
             // 
-            // textBox1
+            // txtNhapBienSo
             // 
-            textBox1.Location = new Point(92, 3);
-            textBox1.Margin = new Padding(4, 3, 4, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(144, 23);
-            textBox1.TabIndex = 7;
+            txtNhapBienSo.Location = new Point(92, 3);
+            txtNhapBienSo.Margin = new Padding(4, 3, 4, 3);
+            txtNhapBienSo.Name = "txtNhapBienSo";
+            txtNhapBienSo.Size = new Size(144, 23);
+            txtNhapBienSo.TabIndex = 7;
             // 
             // btnNhapBien
             // 
@@ -628,7 +628,7 @@
         private System.Windows.Forms.Label txtAmount;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNhapBienSo;
         private System.Windows.Forms.Button btnNhapBien;
         private System.Windows.Forms.Label txtBienSoRa;
         private System.Windows.Forms.Label label9;

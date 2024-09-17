@@ -1,13 +1,19 @@
-﻿using DATN.PARKING.SERVICE.InterfaceMethod;
+﻿using DATN.PARKING.DLL;
+using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using System;
+using System.Globalization;
+using System.IO.Ports;
+using System.Text;
 
 namespace DATN.PARKING.UIUX
 {
     public partial class frmMain : Form
     {
         private readonly IHardwareService _hardwareService;
-
+        private SerialPort serialPortIn ;
+        private SerialPort serialPortOut;
         private VideoCapture _cameraGateIn;
         private VideoCapture _cameraGateOut;
         private bool _isRunning;
@@ -20,9 +26,50 @@ namespace DATN.PARKING.UIUX
             InitializeComponent();
 
             _hardwareService = hardwareService;
-            _hardwareService.HardwareServiceInit("COM3", 9600);
+            //_hardwareService.ServoInit("COM3", 9600);
+            _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, ref serialPortOut, SerialPort_DataReceived);
+
         }
-    
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            // Đọc dữ liệu từ SerialPort
+            //_hardwareService.QrScanGateIn(serialPortIn);
+
+            byte[] buffer = new byte[serialPortIn.BytesToRead];
+            serialPortIn.Read(buffer, 0, buffer.Length);
+            string result = Encoding.UTF8.GetString(buffer).Trim();
+            string data = BitConverter.ToString(buffer);
+            // Cập nhật dữ liệu lên TextBox trong giao diện
+            // Dùng Invoke để đảm bảo dữ liệu được cập nhật đúng luồng giao diện
+            Invoke(new MethodInvoker(delegate
+            {
+                txtNhapBienSo.Text = result.Trim();
+            }));
+        }
+        private string CleanInvalidCharacters(string data)
+        {
+            // Thay thế ký tự điều khiển và ký tự không hợp lệ
+            return data.Replace('\0', ' ').Replace('\uFFFD', '?'); // Có thể điều chỉnh theo nhu cầu
+        }
+        public static string RemoveDiacritics(string text)
+        {
+            if (text == null) return null;
+
+            text = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var ch in text)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(ch);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(ch);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
         private async void frmMain_Load(object sender, EventArgs e)
         {
             Label lbGateIn = new Label();
@@ -41,13 +88,14 @@ namespace DATN.PARKING.UIUX
             lbGateIn.BringToFront();
             lbGateOut.BringToFront();
 
-            _cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
-            _cameraGateOut = new VideoCapture(1);
+          //  _cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
+          //  _cameraGateOut = new VideoCapture(1);
             _isRunning = true;
 
             // Tạo một task để xử lý video trong background
-            Task.Run(() => ProcessVideoCameraGateIn());
-            Task.Run(() => ProcessVideoCameraGateOut());
+            //Task.Run(() => ProcessVideoCameraGateIn());
+            //Task.Run(() => ProcessVideoCameraGateOut());
+            
         }
         private void ProcessVideoCameraGateIn()
         {
