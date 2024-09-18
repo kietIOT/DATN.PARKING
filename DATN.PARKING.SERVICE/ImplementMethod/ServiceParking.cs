@@ -2,21 +2,17 @@
 using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.DLL.Models.Dtos;
 using DATN.PARKING.SERVICE.InterfaceMethod;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DATN.PARKING.SERVICE.ImplementMethod
 {
     public class ServiceParking : IServiceParking
     {
         private readonly IUnitOfWork<ParkingContext> _unitOfWork;
-        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork)
+        private readonly IHardwareService _hardwareService;
+        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork, IHardwareService hardwareService)
         {
             _unitOfWork = unitOfWork;
+            _hardwareService = hardwareService;
         }
 
         public double CalculateTotalAmountForVehicle(int infoId)
@@ -212,7 +208,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 {
                     throw new Exception("Phương tiện này đã được đăng ký và chưa rời khỏi bãi.");
                 }
-
+                //var entity = _hardwareService.ReadDataQrScan();
                 // Thiết lập ngày vào bãi và trạng thái của phương tiện
                 info.NgayVao = DateTime.Now;
                 info.Status = "Y"; // Gắn cờ rằng xe đã vào bãi

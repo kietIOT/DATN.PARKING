@@ -13,9 +13,11 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
         void ServoInit(string portName, int baudRate);
 
 
-        void QrScanInit(string portName, int baud, ref SerialPort _serIn, ref SerialPort _serOut, SerialDataReceivedEventHandler dataReceivedCallback);
-        void QrScanGateIn(SerialPort _serIn);
-        void ReadSerialOut(SerialPort _serOut);
-        void ReadSerialIn(SerialPort _serIn);
+        void QrScanInit(string portName, int baud, ref SerialPort port, SerialDataReceivedEventHandler dataReceivedCallback);
+        string ReadDataQrScan(SerialPort _serIn);
+
+
+         string ReadFingerSensor();
+        string ReadBilledAmount();
     }
 }

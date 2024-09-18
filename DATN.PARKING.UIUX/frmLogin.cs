@@ -1,5 +1,4 @@
-﻿using DATN.PARKING.DLL;
-using DATN.PARKING.SERVICE.InterfaceMethod;
+﻿using DATN.PARKING.SERVICE.InterfaceMethod;
 
 namespace DATN.PARKING.UIUX
 {
@@ -13,12 +12,12 @@ namespace DATN.PARKING.UIUX
             _service = service;
             _hardwareService = hardwareService;
         }
-       
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             try
             {
-                
+
                 //if (!_service.Login(txtUsername.Text, txtPassword.Text))
 
                 //{
@@ -39,5 +38,7 @@ namespace DATN.PARKING.UIUX
         {
             this.Close();
         }
+
+       
     }
 }

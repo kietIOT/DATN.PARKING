@@ -1,11 +1,8 @@
-﻿using DATN.PARKING.DLL;
+﻿using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using System;
-using System.Globalization;
 using System.IO.Ports;
-using System.Text;
 
 namespace DATN.PARKING.UIUX
 {
@@ -18,57 +15,61 @@ namespace DATN.PARKING.UIUX
         private VideoCapture _cameraGateOut;
         private bool _isRunning;
         private readonly object _lock = new object();
-        private Mat _currentFrame;
+        private Information entity = new Information();
+        
 
-      
         public frmMain(IHardwareService hardwareService)
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            _hardwareService = hardwareService;
-            //_hardwareService.ServoInit("COM3", 9600);
-            _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, ref serialPortOut, SerialPort_DataReceived);
+                _hardwareService = hardwareService;
+
+                _hardwareService.ServoInit("COM3", 9600);
+
+                _hardwareService.QrScanInit("COM3", 9600, ref serialPortIn, SerialPortGateIn_DataReceived);
+                _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateOut_DataReceived);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
-        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void SerialPortGateIn_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            
+            
+            // Đọc dữ liệu từ SerialPort
+            //_hardwareService.QrScanGateIn(serialPortIn);
+            string data = _hardwareService.ReadDataQrScan(serialPortIn);
+
+            entity.DiaChi = data;
+            entity.NgayVao = DateTime.Now;
+            entity.HoVaTen = data;
+
+
+
+            Invoke(new MethodInvoker(delegate
+            {
+                
+            }));
+        }
+        private void SerialPortGateOut_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             // Đọc dữ liệu từ SerialPort
             //_hardwareService.QrScanGateIn(serialPortIn);
+            string data = _hardwareService.ReadDataQrScan(serialPortOut);
 
-            byte[] buffer = new byte[serialPortIn.BytesToRead];
-            serialPortIn.Read(buffer, 0, buffer.Length);
-            string result = Encoding.UTF8.GetString(buffer).Trim();
-            string data = BitConverter.ToString(buffer);
-            // Cập nhật dữ liệu lên TextBox trong giao diện
-            // Dùng Invoke để đảm bảo dữ liệu được cập nhật đúng luồng giao diện
+            entity.NgayRa = DateTime.Now;
+
             Invoke(new MethodInvoker(delegate
             {
-                txtNhapBienSo.Text = result.Trim();
+                
             }));
         }
-        private string CleanInvalidCharacters(string data)
-        {
-            // Thay thế ký tự điều khiển và ký tự không hợp lệ
-            return data.Replace('\0', ' ').Replace('\uFFFD', '?'); // Có thể điều chỉnh theo nhu cầu
-        }
-        public static string RemoveDiacritics(string text)
-        {
-            if (text == null) return null;
-
-            text = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
-
-            foreach (var ch in text)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(ch);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(ch);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-        }
+       
 
         private async void frmMain_Load(object sender, EventArgs e)
         {
@@ -88,88 +89,110 @@ namespace DATN.PARKING.UIUX
             lbGateIn.BringToFront();
             lbGateOut.BringToFront();
 
-          //  _cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
-          //  _cameraGateOut = new VideoCapture(1);
+            //_cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
+           // _cameraGateOut = new VideoCapture(1);
             _isRunning = true;
 
             // Tạo một task để xử lý video trong background
-            //Task.Run(() => ProcessVideoCameraGateIn());
-            //Task.Run(() => ProcessVideoCameraGateOut());
+
+            Task.Run(() => ProcessVideoCameraGateIn());
+            Task.Run(() => ProcessVideoCameraGateOut());
             
         }
         private void ProcessVideoCameraGateIn()
         {
-            while (_isRunning)
+            try
             {
-                using var frame = new Mat();
-                _cameraGateIn.Read(frame); // Đọc khung hình từ camera
-
-                if (frame.Empty())
+                while (_isRunning)
                 {
-                    Console.WriteLine("Không thể đọc từ camera.");
-                    break;
+                    using var frame = new Mat();
+                    _cameraGateIn.Read(frame); // Đọc khung hình từ camera
+
+                    if (frame.Empty())
+                    {
+                        Console.WriteLine("Không thể đọc từ camera.");
+                        break;
+                    }
+
+                    // Chuyển đổi khung hình từ OpenCV (Mat) sang Bitmap để hiển thị
+                    var image = frame.ToBitmap();
+
+                    // Cập nhật hình ảnh trên PictureBox trong luồng UI
+                    UpdatePictureBox(image);
                 }
 
-                // Chuyển đổi khung hình từ OpenCV (Mat) sang Bitmap để hiển thị
-                var image = frame.ToBitmap();
-
-                // Cập nhật hình ảnh trên PictureBox trong luồng UI
-                UpdatePictureBox(image);
+                _cameraGateIn.Release();
             }
-
-            _cameraGateIn.Release();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void ProcessVideoCameraGateOut()
         {
-            while (_isRunning)
+            try
             {
-                using var frame = new Mat();
-                _cameraGateOut.Read(frame); // Đọc khung hình từ camera
-
-                if (frame.Empty())
+                while (_isRunning)
                 {
-                    Console.WriteLine("Không thể đọc từ camera.");
-                    break;
+                    using var frame = new Mat();
+                    _cameraGateOut.Read(frame); // Đọc khung hình từ camera
+
+                    if (frame.Empty())
+                    {
+                        MessageBox.Show("Không thể đọc từ camera. Vui lòng kiểm tra và thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Chuyển đổi khung hình từ OpenCV (Mat) sang Bitmap để hiển thị
+                    var image = frame.ToBitmap();
+
+                    // Cập nhật hình ảnh trên PictureBox trong luồng UI
+                    UpdatePictureBox(image);
                 }
 
-                // Chuyển đổi khung hình từ OpenCV (Mat) sang Bitmap để hiển thị
-                var image = frame.ToBitmap();
-
-                // Cập nhật hình ảnh trên PictureBox trong luồng UI
-                UpdatePictureBox(image);
+                _cameraGateOut.Release();
             }
-
-            _cameraGateOut.Release();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void UpdatePictureBox(Bitmap image)
         {
-            // Sử dụng lock để đảm bảo việc cập nhật PictureBox được đồng bộ
-            lock (_lock)
+            try
             {
-                // Cập nhật PictureBox trong luồng UI
-                if (videoGateOut.InvokeRequired)
+                // Sử dụng lock để đảm bảo việc cập nhật PictureBox được đồng bộ
+                lock (_lock)
                 {
-                    videoGateOut.Invoke(new Action(() =>
+                    // Cập nhật PictureBox trong luồng UI
+                    if (videoGateOut.InvokeRequired)
                     {
-                        videoGateOut.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
-                        videoGateOut.Image = image;
-                    }));
-                }
-                if (videoGateIn.InvokeRequired)
-                {
-                    videoGateIn.Invoke(new Action(() =>
+                        videoGateOut.Invoke(new Action(() =>
+                        {
+                            videoGateOut.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
+                            videoGateOut.Image = image;
+                        }));
+                    }
+                    if (videoGateIn.InvokeRequired)
                     {
-                        videoGateIn.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
+                        videoGateIn.Invoke(new Action(() =>
+                        {
+                            videoGateIn.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
+                            videoGateIn.Image = image;
+                        }));
+                    }
+                    else
+                    {
+                        videoGateIn.Image?.Dispose();
                         videoGateIn.Image = image;
-                    }));
+                        videoGateOut.Image?.Dispose();
+                        videoGateOut.Image = image;
+                    }
                 }
-                else
-                {
-                    videoGateIn.Image?.Dispose();
-                    videoGateIn.Image = image;
-                    videoGateOut.Image?.Dispose();
-                    videoGateOut.Image = image;
-                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -235,6 +258,7 @@ namespace DATN.PARKING.UIUX
         {
             _isRunning = false;
             base.OnFormClosing(e);
+            
         }
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
@@ -259,32 +283,41 @@ namespace DATN.PARKING.UIUX
 
         private void CaptureAndDisplayImage()
         {
-            // Đọc khung hình hiện tại từ camera videoGateIn
-            using var frame = new Mat();
-            _cameraGateIn.Read(frame);
-
-            if (!frame.Empty())
+            try
             {
-                var image = frame.ToBitmap();
+                // Đọc khung hình hiện tại từ camera videoGateIn
+                using var frame = new Mat();
+                _cameraGateIn.Read(frame);
 
-                // Cập nhật PictureBox picGateIn với hình ảnh vừa chụp
-                if (picGateIn.InvokeRequired)
+                if (!frame.Empty())
                 {
-                    picGateIn.Invoke(new Action(() =>
+                    var image = frame.ToBitmap();
+
+                    // Cập nhật PictureBox picGateIn với hình ảnh vừa chụp
+                    if (picGateIn.InvokeRequired)
                     {
-                        picGateIn.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
-                        picGateIn.Image = image;    // Hiển thị ảnh mới
-                    }));
+                        picGateIn.Invoke(new Action(() =>
+                        {
+                            picGateIn.Image?.Dispose(); // Giải phóng tài nguyên ảnh cũ
+                            picGateIn.Image = image;    // Hiển thị ảnh mới
+                        }));
+                    }
+                    else
+                    {
+                        picGateIn.Image?.Dispose();
+                        picGateIn.Image = image;
+                    }
                 }
                 else
                 {
-                    picGateIn.Image?.Dispose();
-                    picGateIn.Image = image;
+                    MessageBox.Show("Không thể chụp ảnh từ camera. Vui lòng thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Không thể chụp ảnh từ camera.");
+                throw ex;
             }
         }
 
