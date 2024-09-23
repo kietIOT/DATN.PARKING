@@ -1,4 +1,5 @@
-﻿using DATN.PARKING.DLL;
+﻿using DATN.PARKING.API;
+using DATN.PARKING.DLL;
 using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.DLL.Models.Dtos;
 using DATN.PARKING.SERVICE.InterfaceMethod;
@@ -8,11 +9,11 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
     public class ServiceParking : IServiceParking
     {
         private readonly IUnitOfWork<ParkingContext> _unitOfWork;
-        private readonly IHardwareService _hardwareService;
-        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork, IHardwareService hardwareService)
+        private readonly IHttpUtils _httpClient;
+        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork, IHttpUtils httpClient)
         {
             _unitOfWork = unitOfWork;
-            _hardwareService = hardwareService;
+            _httpClient = httpClient;
         }
 
         public double CalculateTotalAmountForVehicle(int infoId)
@@ -296,6 +297,12 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         public void UpdateVehicleInformation(int infoId, Information updatedInfo)
         {
             throw new NotImplementedException();
+        }
+        public async Task SendDataToRegonize(string data)
+        {
+            var url = $"https://localhost:44386/datn-parking-ai";
+            //data = "SendData";
+            var result = await _httpClient.PostAsync<string>(url, data);
         }
     }
 }

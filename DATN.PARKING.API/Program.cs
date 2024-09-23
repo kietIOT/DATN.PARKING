@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using DATN.PARKING.DLL;
 using DATN.PARKING.SERVICE.ImplementMethod;
+using DATN.PARKING.SERVICE.InterfaceMethod;
+using DATN.PARKING.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUnitOfWork<ParkingContext>,UnitOfWork<ParkingContext>>();
+builder.Services.AddTransient<IServiceParking, ServiceParking>();
+builder.Services.AddTransient<IHardwareService, HardwareService>();
+builder.Services.AddTransient<IHttpUtils,HttpUtils>();
+
+builder.Services.AddHttpClient();
 //builder.Services.AddScoped<IServiceParking,ServiceParking>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

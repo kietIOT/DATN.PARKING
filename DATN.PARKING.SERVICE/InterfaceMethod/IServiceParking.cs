@@ -49,5 +49,8 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
         #region Báo cáo khách hàng: Thống kê khách hàng theo loại thành viên, điểm tích lũy, lượng đặt chỗ.
         #endregion
+
+
+        Task SendDataToRegonize(string data);
     }
 }
