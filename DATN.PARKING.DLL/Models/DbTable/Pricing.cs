@@ -10,7 +10,6 @@ namespace DATN.PARKING.DLL.Models.DbTable
     {
         public int PricingId { get; set; }
         public int VehicleId { get; set; }
-        public string TenPhuongTien { get; set; }
         public DateTime NgayRa { get; set; }
         public DateTime NgayVao { get; set; }
         public string Status { get; set; }

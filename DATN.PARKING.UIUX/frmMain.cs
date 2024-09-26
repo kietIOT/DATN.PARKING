@@ -9,14 +9,14 @@ namespace DATN.PARKING.UIUX
     public partial class frmMain : Form
     {
         private readonly IHardwareService _hardwareService;
-        private SerialPort serialPortIn ;
+        private SerialPort serialPortIn;
         private SerialPort serialPortOut;
         private VideoCapture _cameraGateIn;
         private VideoCapture _cameraGateOut;
         private bool _isRunning;
         private readonly object _lock = new object();
         private Information entity = new Information();
-        
+
 
         public frmMain(IHardwareService hardwareService)
         {
@@ -39,8 +39,8 @@ namespace DATN.PARKING.UIUX
         }
         private void SerialPortGateIn_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            
-            
+
+
             // Đọc dữ liệu từ SerialPort
             //_hardwareService.QrScanGateIn(serialPortIn);
             string data = _hardwareService.ReadDataQrScan(serialPortIn);
@@ -53,7 +53,7 @@ namespace DATN.PARKING.UIUX
 
             Invoke(new MethodInvoker(delegate
             {
-                
+
             }));
         }
         private void SerialPortGateOut_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -66,10 +66,10 @@ namespace DATN.PARKING.UIUX
 
             Invoke(new MethodInvoker(delegate
             {
-                
+
             }));
         }
-       
+
 
         private async void frmMain_Load(object sender, EventArgs e)
         {
@@ -90,14 +90,14 @@ namespace DATN.PARKING.UIUX
             lbGateOut.BringToFront();
 
             //_cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
-           // _cameraGateOut = new VideoCapture(1);
+            // _cameraGateOut = new VideoCapture(1);
             _isRunning = true;
 
             // Tạo một task để xử lý video trong background
 
             Task.Run(() => ProcessVideoCameraGateIn());
             Task.Run(() => ProcessVideoCameraGateOut());
-            
+
         }
         private void ProcessVideoCameraGateIn()
         {
@@ -190,7 +190,7 @@ namespace DATN.PARKING.UIUX
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -209,31 +209,9 @@ namespace DATN.PARKING.UIUX
 
         }
 
-        private void btnAuto_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnAuto.Checked)
-            {
-                if (MessageBox.Show("Bạn có muốn bật/tắt chế độ tự động ?", "Warning",
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                { cbBike.Checked = cbCar.Checked = cbMotoBike.Checked = false; }
-                else { btnAuto.Checked = false; }
-            }
-        }
+      
 
-        private void cbCar_CheckedChanged(object sender, EventArgs e)
-        {
-            btnAuto.Checked = cbBike.Checked = cbMotoBike.Checked = false;
-        }
-
-        private void cbMotoBike_CheckedChanged(object sender, EventArgs e)
-        {
-            btnAuto.Checked = cbCar.Checked = cbBike.Checked = false;
-        }
-
-        private void cbBike_CheckedChanged(object sender, EventArgs e)
-        {
-            btnAuto.Checked = cbCar.Checked = cbMotoBike.Checked = false;
-        }
+        
 
         private void cmtQueryInfo_Click(object sender, EventArgs e)
         {
@@ -250,7 +228,7 @@ namespace DATN.PARKING.UIUX
         private void cmtLogout_Click(object sender, EventArgs e)
         {
             this.Close();
-            var frm = new frmLogin(null,null);
+            var frm = new frmLogin(null, null);
             frm.ShowDialog();
         }
 
@@ -258,7 +236,7 @@ namespace DATN.PARKING.UIUX
         {
             _isRunning = false;
             base.OnFormClosing(e);
-            
+
         }
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
@@ -277,8 +255,8 @@ namespace DATN.PARKING.UIUX
                     _hardwareService.Servo("GateOut");
                     break;
 
-            }    
-           
+            }
+
         }
 
         private void CaptureAndDisplayImage()
@@ -321,6 +299,17 @@ namespace DATN.PARKING.UIUX
             }
         }
 
-
+        private void cmtAreaParkingMap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var frm = new frmParkingArea();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

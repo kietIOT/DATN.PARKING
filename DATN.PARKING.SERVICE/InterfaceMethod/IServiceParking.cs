@@ -52,5 +52,10 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
 
         Task SendDataToRegonize(string data);
+
+
+        void GetAllAreaParking();
+        void GetAreaParkingEmpty();
+        
     }
 }

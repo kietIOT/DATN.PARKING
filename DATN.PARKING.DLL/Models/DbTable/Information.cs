@@ -18,7 +18,6 @@ namespace DATN.PARKING.DLL.Models.DbTable
         public int Diem { get; set; }
         public string DiaChi { get; set; }
         public DateTime NgayDangKy { get; set; }
-        public string TenPhuongTien { get; set; }
         public string BienSoXe { get; set; }
         public DateTime NgayRa { get; set; }
         public DateTime NgayVao { get; set; }

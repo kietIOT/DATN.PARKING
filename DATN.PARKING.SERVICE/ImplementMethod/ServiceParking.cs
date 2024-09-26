@@ -20,31 +20,9 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                var vehicleInfo = _unitOfWork.Context.Informations.FirstOrDefault(c => c.InfomationId == infoId);
-                if (vehicleInfo == null)
-                {
-                    throw new Exception("Thông tin phương tiện không tồn tại.");
-                }
-                var parkingDuration = vehicleInfo.NgayRa - vehicleInfo.NgayVao;
-                var totalHours = parkingDuration.TotalHours;
-
-                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.TenPhuongTien == vehicleInfo.TenPhuongTien);
-                if (pricing == null)
-                {
-                    throw new Exception("Không có thông tin giá cho loại phương tiện này.");
-                }
-                double totalAmount = 0;
-                if (totalHours <= 24)
-                {
-                    totalAmount = (double)totalHours * pricing.PricePerHour;
-                }
-                else
-                {
-                    totalAmount = ((double)totalHours / 24) * pricing.PricePerDay;
-                }
+                return 0;
 
 
-                return totalAmount;
             }
             catch (Exception ex)
             {
@@ -85,7 +63,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                return _unitOfWork.Context.Vehicles.Select(c=>c.TenPhuongTien).ToList();
+                return null;
             }
             catch (Exception ex)
             {
@@ -102,14 +80,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             try
             {
-                var pricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.TenPhuongTien == vehicleType);
-
-                if (pricing == null)
-                {
-                    throw new Exception("Không tìm thấy thông tin giá cho loại phương tiện này.");
-                }
-
-                return pricing;
+                return null;
             }
             catch (Exception ex)
             {
@@ -303,6 +274,30 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             var url = $"https://localhost:44386/datn-parking-ai";
             //data = "SendData";
             var result = await _httpClient.PostAsync<string>(url, data);
+        }
+
+        public void GetAllAreaParking()
+        {
+            try
+            {
+                var item = _unitOfWork.Context.AreaParkings.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void GetAreaParkingEmpty()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

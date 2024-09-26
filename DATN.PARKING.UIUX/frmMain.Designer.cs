@@ -47,9 +47,6 @@
             txtVehicleOwner = new Label();
             label13 = new Label();
             label12 = new Label();
-            cbBike = new CheckBox();
-            cbMotoBike = new CheckBox();
-            cbCar = new CheckBox();
             txtAmount = new Label();
             label10 = new Label();
             panel3 = new Panel();
@@ -66,6 +63,7 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             cmtQueryInfo = new ToolStripMenuItem();
             cmtReport = new ToolStripMenuItem();
+            cmtAreaParkingMap = new ToolStripMenuItem();
             cmtLogout = new ToolStripMenuItem();
             lbDateTime = new Label();
             label3 = new Label();
@@ -163,9 +161,6 @@
             panel2.Controls.Add(txtVehicleOwner);
             panel2.Controls.Add(label13);
             panel2.Controls.Add(label12);
-            panel2.Controls.Add(cbBike);
-            panel2.Controls.Add(cbMotoBike);
-            panel2.Controls.Add(cbCar);
             panel2.Controls.Add(txtAmount);
             panel2.Controls.Add(label10);
             panel2.Controls.Add(panel3);
@@ -188,7 +183,7 @@
             btnAuto.BackColor = Color.White;
             btnAuto.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAuto.ForeColor = Color.Red;
-            btnAuto.Location = new Point(13, 399);
+            btnAuto.Location = new Point(15, 416);
             btnAuto.Margin = new Padding(4, 3, 4, 3);
             btnAuto.Name = "btnAuto";
             btnAuto.Size = new Size(155, 24);
@@ -196,7 +191,6 @@
             btnAuto.TabStop = true;
             btnAuto.Text = "Chế độ tự động ";
             btnAuto.UseVisualStyleBackColor = false;
-            btnAuto.Click += btnAuto_CheckedChanged;
             // 
             // btnOpenGate
             // 
@@ -316,42 +310,6 @@
             label12.TabIndex = 13;
             label12.Text = "THÔNG TIN NGƯỜI DÙNG";
             label12.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // cbBike
-            // 
-            cbBike.AutoSize = true;
-            cbBike.Location = new Point(180, 438);
-            cbBike.Margin = new Padding(4, 3, 4, 3);
-            cbBike.Name = "cbBike";
-            cbBike.Size = new Size(62, 19);
-            cbBike.TabIndex = 12;
-            cbBike.Text = "Xe đạp";
-            cbBike.UseVisualStyleBackColor = true;
-            cbBike.Click += cbBike_CheckedChanged;
-            // 
-            // cbMotoBike
-            // 
-            cbMotoBike.AutoSize = true;
-            cbMotoBike.Location = new Point(90, 438);
-            cbMotoBike.Margin = new Padding(4, 3, 4, 3);
-            cbMotoBike.Name = "cbMotoBike";
-            cbMotoBike.Size = new Size(65, 19);
-            cbMotoBike.TabIndex = 11;
-            cbMotoBike.Text = "Xe máy";
-            cbMotoBike.UseVisualStyleBackColor = true;
-            cbMotoBike.Click += cbMotoBike_CheckedChanged;
-            // 
-            // cbCar
-            // 
-            cbCar.AutoSize = true;
-            cbCar.Location = new Point(13, 438);
-            cbCar.Margin = new Padding(4, 3, 4, 3);
-            cbCar.Name = "cbCar";
-            cbCar.Size = new Size(63, 19);
-            cbCar.TabIndex = 10;
-            cbCar.Text = "Xe ô tô";
-            cbCar.UseVisualStyleBackColor = true;
-            cbCar.Click += cbCar_CheckedChanged;
             // 
             // txtAmount
             // 
@@ -513,9 +471,9 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { cmtQueryInfo, cmtReport, cmtLogout });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { cmtQueryInfo, cmtReport, cmtAreaParkingMap, cmtLogout });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(175, 70);
+            contextMenuStrip1.Size = new Size(175, 92);
             // 
             // cmtQueryInfo
             // 
@@ -530,6 +488,13 @@
             cmtReport.Size = new Size(174, 22);
             cmtReport.Text = "Báo cáo doanh thu";
             cmtReport.Click += cmtReport_Click;
+            // 
+            // cmtAreaParkingMap
+            // 
+            cmtAreaParkingMap.Name = "cmtAreaParkingMap";
+            cmtAreaParkingMap.Size = new Size(174, 22);
+            cmtAreaParkingMap.Text = "Sơ đồ bãi giữ xe";
+            cmtAreaParkingMap.Click += cmtAreaParkingMap_Click;
             // 
             // cmtLogout
             // 
@@ -622,9 +587,6 @@
         private System.Windows.Forms.Label txtVehicleOwner;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox cbBike;
-        private System.Windows.Forms.CheckBox cbMotoBike;
-        private System.Windows.Forms.CheckBox cbCar;
         private System.Windows.Forms.Label txtAmount;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel3;
@@ -653,5 +615,6 @@
         private PictureBox picGateOut;
         private PictureBox videoGateIn;
         private PictureBox videoGateOut;
+        private ToolStripMenuItem cmtAreaParkingMap;
     }
 }

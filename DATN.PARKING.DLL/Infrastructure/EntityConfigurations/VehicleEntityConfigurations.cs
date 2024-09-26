@@ -15,13 +15,6 @@ namespace DATN.PARKING.DLL.Infrastructure.EntityConfigurations
             entity.HasIndex(e => e.VehicleId, "AGENT_IDX1");
 
 
-
-            entity.Property(e => e.TenPhuongTien)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("TEN_PHUONG_TIEN")
-                .HasDefaultValueSql("' ' ");
-
             entity.Property(e => e.BienSoXe)
                 .HasMaxLength(50)
                 .IsUnicode(false)
