@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATN.PARKING.API", "DATN.PA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATN.PARKING.UIUX", "DATN.PARKING.UIUX\DATN.PARKING.UIUX.csproj", "{C5679983-C6DE-4830-971C-1EE3AE30AEEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto_parking", "C:\Users\Administrator\Downloads\Auto_parking\Auto_parking.csproj", "{F6F8153E-7D25-4E66-9653-606AD3F41DFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto_parking", "Auto_parking\Auto_parking.csproj", "{F6F8153E-7D25-4E66-9653-606AD3F41DFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

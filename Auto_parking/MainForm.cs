@@ -112,7 +112,7 @@ namespace Auto_parking
         ImageForm IF;
         private void MainForm_Load(object sender, EventArgs e)
         {
-            capture = new Emgu.CV.Capture();
+         //   capture = new Emgu.CV.Capture();
             timer1.Enabled = true;
 
             IF = new ImageForm();
@@ -166,40 +166,40 @@ namespace Auto_parking
         bool success = true;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (success == true)
-            {
-                success = false;
-                new Thread(() =>
-                {
-                    try
-                    {
-                        capture.SetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 640);
-                        capture.SetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 480);
-                        Image<Bgr, byte> cap = capture.QueryFrame();
-                        if (cap != null)
-                        {
-                            MethodInvoker mi = delegate
-                            {
-                                try
-                                {
-                                    Bitmap bmp = cap.ToBitmap();
-                                    pictureBox_WC.Image = bmp;
-                                    IF.pictureBox4.Image = bmp;
-                                    pictureBox_WC.Update();
-                                    IF.pictureBox4.Update();
-                                }
-                                catch (Exception ex)
-                                { }
-                            };
-                            if (InvokeRequired)
-                                Invoke(mi);
-                        }
-                    }
-                    catch (Exception) { }
-                    success = true;
-                }).Start();
+            //if (success == true)
+            //{
+            //    success = false;
+            //    new Thread(() =>
+            //    {
+            //        try
+            //        {
+            //            capture.SetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 640);
+            //            capture.SetCaptureProperty(CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 480);
+            //            Image<Bgr, byte> cap = capture.QueryFrame();
+            //            if (cap != null)
+            //            {
+            //                MethodInvoker mi = delegate
+            //                {
+            //                    try
+            //                    {
+            //                        Bitmap bmp = cap.ToBitmap();
+            //                        pictureBox_WC.Image = bmp;
+            //                        IF.pictureBox4.Image = bmp;
+            //                        pictureBox_WC.Update();
+            //                        IF.pictureBox4.Update();
+            //                    }
+            //                    catch (Exception ex)
+            //                    { }
+            //                };
+            //                if (InvokeRequired)
+            //                    Invoke(mi);
+            //            }
+            //        }
+            //        catch (Exception) { }
+            //        success = true;
+            //    }).Start();
                 
-            }
+            //}
             
             
         }
