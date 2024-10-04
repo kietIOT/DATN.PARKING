@@ -537,24 +537,36 @@ namespace Auto_parking
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //while (true) ;
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Image (*.bmp; *.jpg; *.jpeg; *.png) |*.bmp; *.jpg; *.jpeg; *.png|All files (*.*)|*.*||";
-            dlg.InitialDirectory = Application.StartupPath + "\\ImageTest";
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
-            {
-                return;
-            }
-            string startupPath = dlg.FileName;
+            ////while (true) ;
+            //OpenFileDialog dlg = new OpenFileDialog();
+            //dlg.Filter = "Image (*.bmp; *.jpg; *.jpeg; *.png) |*.bmp; *.jpg; *.jpeg; *.png|All files (*.*)|*.*||";
+            //dlg.InitialDirectory = Application.StartupPath + "\\ImageTest";
+            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            //{
+            //    return;
+            //}
+            //string startupPath = dlg.FileName;
+
+            //Image temp1;
+            //string temp2, temp3;
+            //Reconize(startupPath, out temp1, out temp2, out temp3);
+            //pictureBox_XeVAO.Image = temp1;
+            //if (temp3 == "")
+            //    text_BiensoVAO.Text = "Cannot recognize license plate !";
+            //else
+            //    text_BiensoVAO.Text = temp3;
+
+            string startupPath = Application.StartupPath + "\\ImageTest\\HV-002.bmp"; // Replace with your image path
 
             Image temp1;
             string temp2, temp3;
             Reconize(startupPath, out temp1, out temp2, out temp3);
             pictureBox_XeVAO.Image = temp1;
             if (temp3 == "")
-                text_BiensoVAO.Text = "Cannot recognize license plate !";
+                text_BiensoVAO.Text = "Cannot recognize license plate!";
             else
                 text_BiensoVAO.Text = temp3;
+
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -209,10 +209,6 @@ namespace DATN.PARKING.UIUX
 
         }
 
-      
-
-        
-
         private void cmtQueryInfo_Click(object sender, EventArgs e)
         {
             var frm = new frmQueryInfo();
