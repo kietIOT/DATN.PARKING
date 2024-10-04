@@ -37,24 +37,39 @@ namespace Auto_parking.Service
 
         public void StartListening()
         {
-            _listener.Start();
-            Console.WriteLine("Listening for API requests on http://localhost:8080/...");
-            Task.Run(() => Listen());
+            try
+            {
+                RegonizeInit();
+                _listener.Start();
+                Console.WriteLine("Listening for API requests on http://localhost:8080/...");
+                Task.Run(() => Listen());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private async Task Listen()
         {
-            while (true)
+            try
             {
-                HttpListenerContext context = await _listener.GetContextAsync();
-                HttpListenerRequest request = context.Request;
-                await HandlePostRequest(context);
+                
+                while (true)
+                {
+                    HttpListenerContext context = await _listener.GetContextAsync();
+                    HttpListenerRequest request = context.Request;
+                    await HandlePostRequest(context);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         private async Task HandlePostRequest(HttpListenerContext context)
         {
             HttpListenerResponse response = context.Response;
-            RegonizeInit();
             // Đọc dữ liệu POST gửi đến
             using (var reader = new System.IO.StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
             {
