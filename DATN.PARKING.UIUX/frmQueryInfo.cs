@@ -1,12 +1,13 @@
 ﻿using DATN.PARKING.DLL;
 using DATN.PARKING.SERVICE.ImplementMethod;
+using DATN.PARKING.SERVICE.InterfaceMethod;
 
 namespace DATN.PARKING.UIUX
 {
     public partial class frmQueryInfo : Form
     {
-        private readonly ServiceParking _service;
-        public frmQueryInfo(ServiceParking service)
+        private readonly IServiceParking _service;
+        public frmQueryInfo(IServiceParking service)
         {
             _service = service;
         }
@@ -20,8 +21,8 @@ namespace DATN.PARKING.UIUX
         {
             try
             {
-                var lstVehicleType = _service.GetAllVehicleType();
-                lookVehicleType.Properties.DataSource = lstVehicleType;
+                //var lstVehicleType = _service.GetAllVehicleType();
+                //lookVehicleType.Properties.DataSource = lstVehicleType;
             }
             catch (Exception ex)
             {

@@ -2,6 +2,8 @@
 using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using System.Drawing.Imaging;
+using System.IO;
 using System.IO.Ports;
 
 namespace DATN.PARKING.UIUX
@@ -16,7 +18,6 @@ namespace DATN.PARKING.UIUX
         private VideoCapture _cameraGateOut;
         private bool _isRunning;
         private readonly object _lock = new object();
-        private Information entity = new Information();
 
 
         public frmMain(IHardwareService hardwareService,IServiceParking serviceParking)
@@ -46,10 +47,7 @@ namespace DATN.PARKING.UIUX
             //_hardwareService.QrScanGateIn(serialPortIn);
             string data = _hardwareService.ReadDataQrScan(serialPortIn);
 
-            entity.DiaChi = data;
-            entity.NgayVao = DateTime.Now;
-            entity.HoVaTen = data;
-
+        
 
 
             Invoke(new MethodInvoker(delegate
@@ -63,7 +61,6 @@ namespace DATN.PARKING.UIUX
             //_hardwareService.QrScanGateIn(serialPortIn);
             string data = _hardwareService.ReadDataQrScan(serialPortOut);
 
-            entity.NgayRa = DateTime.Now;
 
             Invoke(new MethodInvoker(delegate
             {
@@ -252,7 +249,7 @@ namespace DATN.PARKING.UIUX
                     _hardwareService.Servo("GateOut");
                     break;
                 case Keys.F:
-                    _serviceParking.SendDataToRegonize();
+                    _serviceParking.SendDataToRegonize(@"D:\DATN_DEV\DATN.PARKING\Auto_parking\bin\Debug\ImageTest\keit.jpg");
                     break;
 
             }
@@ -285,6 +282,12 @@ namespace DATN.PARKING.UIUX
                         picGateIn.Image?.Dispose();
                         picGateIn.Image = image;
                     }
+
+                    if (!_serviceParking.SaveCapturedImage(image))
+                    {
+                        MessageBox.Show($"Đã xảy ra lỗi khi lưu ảnh", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
                 else
                 {
@@ -298,12 +301,13 @@ namespace DATN.PARKING.UIUX
                 throw ex;
             }
         }
+      
 
         private void cmtAreaParkingMap_Click(object sender, EventArgs e)
         {
             try
             {
-                var frm = new frmParkingArea();
+                var frm = new frmParkingArea(_serviceParking);
                 frm.ShowDialog();
             }
             catch (Exception ex)

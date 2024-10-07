@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -76,21 +77,31 @@ namespace Auto_parking.Service
                 string requestBody = await reader.ReadToEndAsync();
                 Console.WriteLine("POST data received: " + requestBody);
 
-                string responseString = ReadPlateLicenseNumber().Trim();
-                byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+                // Chuyển đổi JSON thành đối tượng
+                var requestData = JsonConvert.DeserializeObject<RequestData>(requestBody);
 
+                // Lấy đường dẫn ảnh từ dữ liệu đã nhận
+                string imageUrl = requestData.ImageUrl;
+                Console.WriteLine("Đường dẫn ảnh: " + imageUrl);
+
+                // Xử lý đường dẫn ảnh (ví dụ nhận diện biển số từ ảnh)
+                string responseString = ReadPlateLicenseNumber(imageUrl).Trim();
+
+                // Trả về kết quả sau khi xử lý
+                byte[] buffer = Encoding.UTF8.GetBytes(responseString);
                 response.ContentLength64 = buffer.Length;
                 await response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
                 response.OutputStream.Close();
             }
         }
-        public string ReadPlateLicenseNumber()
+        public string ReadPlateLicenseNumber(string imageUrl)
         {
             string startupPath = Application.StartupPath + "\\ImageTest\\keit.jpg"; // Replace with your image path
+            string startupPath1 = imageUrl; // Replace with your image path
 
             Image temp1;
             string temp2, temp3;
-            Reconize(startupPath, out temp1, out temp2, out temp3);
+            Reconize(startupPath1, out temp1, out temp2, out temp3);
             if (temp3 == "")
                 return "Cannot recognize license plate!";
             else

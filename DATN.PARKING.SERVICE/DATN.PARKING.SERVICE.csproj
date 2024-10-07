@@ -9,7 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DATN.PARKING.DLL\DATN.PARKING.DLL.csproj" />
     <PackageReference Include="IronOcr" Version="2024.8.21" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="OpenCvSharp4" Version="4.10.0.20240616" />

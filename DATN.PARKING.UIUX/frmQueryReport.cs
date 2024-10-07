@@ -41,7 +41,6 @@ namespace DATN.PARKING.UIUX
         {
             try
             {
-                lookVehicleType.Properties.DataSource = _service.GetAllVehicleType();
             }
 
             catch(Exception ex)

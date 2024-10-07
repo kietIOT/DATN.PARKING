@@ -43,8 +43,6 @@
             gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
-            lookVehicleType = new DevExpress.XtraEditors.LookUpEdit();
-            label3 = new Label();
             btnSearch = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtToDate.Properties).BeginInit();
@@ -53,7 +51,6 @@
             ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)grvData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lookVehicleType.Properties).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -64,8 +61,6 @@
             panel1.Controls.Add(dtToDate);
             panel1.Controls.Add(dtFromDate);
             panel1.Controls.Add(grvData);
-            panel1.Controls.Add(lookVehicleType);
-            panel1.Controls.Add(label3);
             panel1.Controls.Add(btnSearch);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
@@ -202,27 +197,9 @@
             gridColumn7.Visible = true;
             gridColumn7.VisibleIndex = 6;
             // 
-            // lookVehicleType
-            // 
-            lookVehicleType.Location = new Point(104, 133);
-            lookVehicleType.Name = "lookVehicleType";
-            lookVehicleType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lookVehicleType.Properties.NullText = "[Chọn phương tiện]";
-            lookVehicleType.Size = new Size(119, 20);
-            lookVehicleType.TabIndex = 14;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(26, 138);
-            label3.Name = "label3";
-            label3.Size = new Size(44, 15);
-            label3.TabIndex = 11;
-            label3.Text = "Loại xe";
-            // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(302, 80);
+            btnSearch.Location = new Point(294, 63);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(115, 50);
             btnSearch.TabIndex = 3;
@@ -245,7 +222,6 @@
             ((System.ComponentModel.ISupportInitialize)dtFromDate.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)grvData).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lookVehicleType.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -266,8 +242,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
-        private DevExpress.XtraEditors.LookUpEdit lookVehicleType;
-        private Label label3;
         private Button btnSearch;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DATN.PARKING.SERVICE.InterfaceMethod;
+﻿using DATN.PARKING.DLL;
+using DATN.PARKING.SERVICE.InterfaceMethod;
 
 namespace DATN.PARKING.UIUX
 {
@@ -17,13 +18,19 @@ namespace DATN.PARKING.UIUX
         {
             try
             {
+                if(txtUsername.Text.IsEmpty() ||  txtPassword.Text.IsEmpty())
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin tài khoản/ mật khẩu !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                //if (!_service.Login(txtUsername.Text, txtPassword.Text))
 
-                //{
-                //    MessageBox.Show("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    return;
-                //}
+                if (!_service.Login(txtUsername.Text, txtPassword.Text))
+
+                {
+                    MessageBox.Show("Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Hide();
                 var frm = new frmMain(_hardwareService, _service);
                 frm.ShowDialog();
@@ -37,6 +44,7 @@ namespace DATN.PARKING.UIUX
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+
         }
 
        

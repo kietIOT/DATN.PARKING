@@ -1,6 +1,0 @@
-@DATN.PARKING.API_HostAddress = http://localhost:5244
-
-GET {{DATN.PARKING.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,9 +1,12 @@
-﻿using DATN.PARKING.API;
-using DATN.PARKING.DLL;
+﻿using DATN.PARKING.DLL;
 using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.DLL.Models.Dtos;
 using DATN.PARKING.SERVICE.InterfaceMethod;
+using Newtonsoft.Json;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Net.Http;
+using System.Text;
 
 namespace DATN.PARKING.SERVICE.ImplementMethod
 {
@@ -18,274 +21,61 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
-        public double CalculateTotalAmountForVehicle(int infoId)
-        {
-            try
-            {
-                return 0;
-
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-        }
-
-        public void DeleteCustomer(int customerId)
-        {
-            try
-            {
-                var entity = _unitOfWork.Context.Customers.FirstOrDefault(c => c.KhachHangId == customerId);
-                if (entity != null)
-                {
-                    _unitOfWork.Context.Customers.Remove(entity);
-                }
-            }
-            catch (Exception ex)
-            {
-                _unitOfWork.Rollback();
-            }
-        }
-
-        public List<ViewInformationCustomer> GetAllInfomationCustomer(DateTime ngayra, DateTime ngayvao, string cccd, string name, string biensoxe, string loaixe)
-        {
-            try
-            {
-                return null;
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public List<string> GetAllVehicleType()
-        {
-            try
-            {
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void GetCustomerDetails(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Pricing GetPricingDetails(string vehicleType)
-        {
-            try
-            {
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public List<Customer> ListAllCustomers()
-        {
-            try
-            {
-                return _unitOfWork.Context.Customers.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
         public bool Login(string userName, string password)
         {
-            return (_unitOfWork.Context.Accounts.FirstOrDefault(c => c.UserName == userName.TrimEx() && c.Password == password.Trim()) == null) ? false : true;
+            try
+            {
+                return (!_unitOfWork.Context.Accounts.Any(c => c.UserName == userName.TrimEx() && c.Password == password.Trim())) ? false : true;
+            }
+            catch { return false; }
 
         }
 
-        public void ProcessPayment(Payment payment)
+        public async Task<string> SendDataToRegonize(string imageUrl)
         {
             try
             {
-                var vehicleInfo = _unitOfWork.Context.Informations.FirstOrDefault(info => info.PaymentId == payment.PaymentId);
-                if (vehicleInfo == null)
+                var url = $"http://localhost:8080/";
+                var client = _httpClientFactory.CreateClient(HttpClientName);
+
+                var content = new StringContent(JsonConvert.SerializeObject(new { ImageUrl = imageUrl }), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response;
+                response = await client.PostAsync(url, content);
+                if (response.IsSuccessStatusCode)
                 {
-                    throw new Exception("Thông tin phương tiện không tồn tại.");
+                    // Đọc và trả về nội dung phản hồi dưới dạng chuỗi
+                    return await response.Content.ReadAsStringAsync();
                 }
-
-                // Bước 2: Tính tổng số tiền cần thanh toán
-                double totalAmount = CalculateTotalAmountForVehicle(vehicleInfo.VehicleId);
-
-                // Bước 3: Kiểm tra số tiền khách hàng đã trả
-                if (payment.TienKhachTra < totalAmount)
+                else
                 {
-                    throw new Exception("Số tiền khách trả không đủ.");
+                    // Xử lý khi API trả về lỗi
+                    throw new Exception($"API trả về lỗi: {response.StatusCode}");
                 }
-
-                // Bước 4: Lưu thông tin thanh toán vào cơ sở dữ liệu
-                payment.TienTra = totalAmount;
-                payment.NgayThanhToan = DateTime.Now;  // Ngày thanh toán
-                _unitOfWork.Context.Payments.Add(payment);
-
-                // Cập nhật trạng thái phương tiện
-                vehicleInfo.Status = "Y"; // Hoặc một trạng thái khác để đánh dấu phương tiện đã thanh toán
-                _unitOfWork.Context.Informations.Update(vehicleInfo);
-
-
-                // Bước 6: Lưu tất cả các thay đổi vào cơ sở dữ liệu
-                _unitOfWork.Context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Lỗi khi gửi dữ liệu đến API: {ex.Message}");
             }
         }
 
-        public void RegisterCustomer(Customer customer)
+        public bool SaveCapturedImage(Bitmap image)
         {
             try
             {
-                var existingCustomer = _unitOfWork.Context.Customers.FirstOrDefault(c => c.SoDienThoai == customer.SoDienThoai || c.Email == customer.Email);
-
-                if (existingCustomer != null)
+                // Đường dẫn lưu trữ ảnh
+                string folderPath = @"C:\Images";
+                if (!Directory.Exists(folderPath))
                 {
-                    throw new Exception("Khách hàng với số điện thoại hoặc email này đã tồn tại.");
+                    Directory.CreateDirectory(folderPath);
                 }
 
-                // Thiết lập ngày đăng ký cho khách hàng mới
-                customer.NgayDangKy = DateTime.Now;
+                // Tạo tên file dựa trên thời gian hiện tại để đảm bảo tên file không bị trùng
+                string fileName = Path.Combine(folderPath, $"Image_{DateTime.Now:yyyyMMdd_HHmmss}.jpg");
 
-                // Thêm khách hàng mới vào cơ sở dữ liệu
-                _unitOfWork.Context.Customers.Add(customer);
-                _unitOfWork.Context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                _unitOfWork.Rollback();
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void RegisterVehicle(Information info)
-        {
-            try
-            {
-                // Kiểm tra xem biển số xe đã tồn tại trong bãi chưa và chưa rời khỏi bãi
-                var existingVehicle = _unitOfWork.Context.Informations.FirstOrDefault(i => i.BienSoXe == info.BienSoXe && i.Status != "Y");
-
-                if (existingVehicle != null)
-                {
-                    throw new Exception("Phương tiện này đã được đăng ký và chưa rời khỏi bãi.");
-                }
-                //var entity = _hardwareService.ReadDataQrScan();
-                // Thiết lập ngày vào bãi và trạng thái của phương tiện
-                info.NgayVao = DateTime.Now;
-                info.Status = "Y"; // Gắn cờ rằng xe đã vào bãi
-
-                // Đăng ký thông tin phương tiện mới vào cơ sở dữ liệu
-                _unitOfWork.Context.Informations.Add(info);
-                _unitOfWork.Context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                _unitOfWork.Rollback();
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void SetPricing(Pricing pricing)
-        {
-            try
-            {
-                var existingPricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.VehicleId == pricing.VehicleId);
-                if (existingPricing != null)
-                {
-                    throw new Exception("Giá cho loại phương tiện này đã tồn tại.");
-                }
-
-                // Thêm giá mới vào cơ sở dữ liệu
-                _unitOfWork.Context.Pricings.Add(pricing);
-                _unitOfWork.Context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void UpdateCustomer(int customerId, Customer updatedCustomer)
-        {
-            try
-            {
-                var existingCustomer = _unitOfWork.Context.Customers.FirstOrDefault(c => c.KhachHangId == customerId);
-
-                if (existingCustomer == null)
-                {
-                    throw new Exception("Không tìm thấy thông tin khách hàng với ID này.");
-                }
-
-                // Cập nhật các thuộc tính của khách hàng
-                existingCustomer.HoVaTen = updatedCustomer.HoVaTen;
-                existingCustomer.DiaChi = updatedCustomer.DiaChi;
-                existingCustomer.SoDienThoai = updatedCustomer.SoDienThoai;
-                existingCustomer.Diem = updatedCustomer.Diem;
-                existingCustomer.LoaiThanhVien = updatedCustomer.LoaiThanhVien;
-                existingCustomer.Email = updatedCustomer.Email;
-
-                // Lưu các thay đổi vào cơ sở dữ liệu
-                _unitOfWork.Context.Customers.Update(existingCustomer);
-                _unitOfWork.Context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                _unitOfWork.Rollback();
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void UpdatePricing(int pricingId, Pricing updatedPricing)
-        {
-            var existingPricing = _unitOfWork.Context.Pricings.FirstOrDefault(p => p.PricingId == pricingId);
-
-            if (existingPricing == null)
-            {
-                throw new Exception("Không tìm thấy thông tin giá cho ID này.");
-            }
-
-            // Cập nhật các thuộc tính của giá
-            existingPricing.PricePerHour = updatedPricing.PricePerHour;
-            existingPricing.PricePerDay = updatedPricing.PricePerDay;
-            existingPricing.PricePerMonth = updatedPricing.PricePerMonth;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
-            _unitOfWork.Context.Pricings.Update(existingPricing);
-            _unitOfWork.Context.SaveChanges();
-        }
-
-        public void UpdateVehicleInformation(int infoId, Information updatedInfo)
-        {
-            throw new NotImplementedException();
-        }
-        public async Task SendDataToRegonize()
-        {
-            var url = $"http://localhost:8080/";
-            var client = _httpClientFactory.CreateClient(HttpClientName);
-            HttpResponseMessage response;
-            response = await client.PostAsync(url, null);
-            var res = await response.Content.ReadAsStringAsync();
-
-        }
-
-        public void GetAllAreaParking()
-        {
-            try
-            {
-                var item = _unitOfWork.Context.AreaParkings.ToList();
+                // Lưu ảnh với định dạng JPEG
+                image.Save(fileName, ImageFormat.Jpeg);
+                return true;
             }
             catch (Exception ex)
             {
@@ -293,16 +83,18 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             }
         }
 
-        public void GetAreaParkingEmpty()
+        public List<ParkingSlot> GetAllParkingSlot()
         {
             try
             {
-
+                var list = _unitOfWork.Context.ParkingSlots.ToList();
+                return list;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message);
             }
         }
+
     }
 }

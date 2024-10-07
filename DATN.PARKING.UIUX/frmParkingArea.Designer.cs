@@ -30,6 +30,8 @@
         {
             tableLayoutPanel4 = new TableLayoutPanel();
             panel1 = new Panel();
+            btnLoadData = new Button();
+            label21 = new Label();
             label17 = new Label();
             label18 = new Label();
             label19 = new Label();
@@ -70,8 +72,6 @@
             txtC4 = new TextBox();
             txtC1 = new TextBox();
             txtC2 = new TextBox();
-            label21 = new Label();
-            btnLoadData = new Button();
             panel1.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -127,6 +127,28 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1002, 564);
             panel1.TabIndex = 0;
+            // 
+            // btnLoadData
+            // 
+            btnLoadData.Location = new Point(35, 106);
+            btnLoadData.Name = "btnLoadData";
+            btnLoadData.Size = new Size(98, 60);
+            btnLoadData.TabIndex = 33;
+            btnLoadData.Text = "Load Dữ Liệu";
+            btnLoadData.UseVisualStyleBackColor = true;
+            btnLoadData.Click += btnLoadData_Click;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.BackColor = SystemColors.Control;
+            label21.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label21.ForeColor = SystemColors.MenuHighlight;
+            label21.Location = new Point(347, 9);
+            label21.Name = "label21";
+            label21.Size = new Size(297, 45);
+            label21.TabIndex = 32;
+            label21.Text = "SƠ ĐỒ BÃI GIỮ XE";
             // 
             // label17
             // 
@@ -402,6 +424,7 @@
             // 
             // txtA1
             // 
+            txtA1.BackColor = SystemColors.Window;
             txtA1.Dock = DockStyle.Fill;
             txtA1.Location = new Point(3, 3);
             txtA1.Multiline = true;
@@ -592,28 +615,6 @@
             txtC2.Size = new Size(90, 134);
             txtC2.TabIndex = 1;
             // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.BackColor = SystemColors.Control;
-            label21.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.ForeColor = SystemColors.MenuHighlight;
-            label21.Location = new Point(347, 9);
-            label21.Name = "label21";
-            label21.Size = new Size(297, 45);
-            label21.TabIndex = 32;
-            label21.Text = "SƠ ĐỒ BÃI GIỮ XE";
-            // 
-            // btnLoadData
-            // 
-            btnLoadData.Location = new Point(35, 106);
-            btnLoadData.Name = "btnLoadData";
-            btnLoadData.Size = new Size(98, 60);
-            btnLoadData.TabIndex = 33;
-            btnLoadData.Text = "Load Dữ Liệu";
-            btnLoadData.UseVisualStyleBackColor = true;
-            btnLoadData.Click += btnLoadData_Click;
-            // 
             // frmParkingArea
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -622,6 +623,7 @@
             Controls.Add(panel1);
             Name = "frmParkingArea";
             Text = "frmParkingArea";
+            Load += frmParkingArea_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tableLayoutPanel5.ResumeLayout(false);
