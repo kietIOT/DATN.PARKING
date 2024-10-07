@@ -25,7 +25,7 @@ namespace DATN.PARKING.UIUX
                 //    return;
                 //}
                 this.Hide();
-                var frm = new frmMain(_hardwareService);
+                var frm = new frmMain(_hardwareService, _service);
                 frm.ShowDialog();
             }
             catch (Exception ex)

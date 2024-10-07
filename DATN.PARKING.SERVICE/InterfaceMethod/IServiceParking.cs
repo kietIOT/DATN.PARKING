@@ -51,7 +51,7 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
         #endregion
 
 
-        Task SendDataToRegonize(string data);
+        Task SendDataToRegonize();
 
 
         void GetAllAreaParking();

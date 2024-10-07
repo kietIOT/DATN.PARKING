@@ -1,4 +1,5 @@
-﻿using DATN.PARKING.DLL;
+﻿using DATN.PARKING.API;
+using DATN.PARKING.DLL;
 using DATN.PARKING.SERVICE.ImplementMethod;
 using DATN.PARKING.SERVICE.InterfaceMethod;
 using Microsoft.EntityFrameworkCore;
@@ -40,10 +41,11 @@ namespace DATN.PARKING.UIUX
                 .ConfigureServices((context, services) => {
                     services.AddDbContext<ParkingContext>(options =>
                         options.UseSqlServer("Data Source=OBAMA\\SQLEXPRESS; Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=TrueData Source=OBAMA\\SQLEXPRESS; Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True"));
-
+                    services.AddHttpClient();
                     services.AddTransient<IUnitOfWork<ParkingContext>, UnitOfWork<ParkingContext>>();
                     services.AddTransient<IServiceParking, ServiceParking>();
                     services.AddTransient<IHardwareService, HardwareService>();
+                    services.AddTransient<IHttpUtils, HttpUtils>();
                     services.AddTransient<frmLogin>();
                     services.AddTransient<frmMain>();
                 });

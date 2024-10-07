@@ -9,6 +9,7 @@ namespace DATN.PARKING.UIUX
     public partial class frmMain : Form
     {
         private readonly IHardwareService _hardwareService;
+        private readonly IServiceParking _serviceParking;
         private SerialPort serialPortIn;
         private SerialPort serialPortOut;
         private VideoCapture _cameraGateIn;
@@ -18,18 +19,18 @@ namespace DATN.PARKING.UIUX
         private Information entity = new Information();
 
 
-        public frmMain(IHardwareService hardwareService)
+        public frmMain(IHardwareService hardwareService,IServiceParking serviceParking)
         {
             try
             {
                 InitializeComponent();
-
+                _serviceParking = serviceParking;
                 _hardwareService = hardwareService;
 
-                _hardwareService.ServoInit("COM3", 9600);
+          //      _hardwareService.ServoInit("COM3", 9600);
 
-                _hardwareService.QrScanInit("COM3", 9600, ref serialPortIn, SerialPortGateIn_DataReceived);
-                _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateOut_DataReceived);
+         //       _hardwareService.QrScanInit("COM3", 9600, ref serialPortIn, SerialPortGateIn_DataReceived);
+         //       _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateOut_DataReceived);
             }
             catch (Exception ex)
             {
@@ -95,8 +96,8 @@ namespace DATN.PARKING.UIUX
 
             // Tạo một task để xử lý video trong background
 
-            Task.Run(() => ProcessVideoCameraGateIn());
-            Task.Run(() => ProcessVideoCameraGateOut());
+       //     Task.Run(() => ProcessVideoCameraGateIn());
+       //     Task.Run(() => ProcessVideoCameraGateOut());
 
         }
         private void ProcessVideoCameraGateIn()
@@ -249,6 +250,9 @@ namespace DATN.PARKING.UIUX
 
                 case Keys.O:
                     _hardwareService.Servo("GateOut");
+                    break;
+                case Keys.F:
+                    _serviceParking.SendDataToRegonize();
                     break;
 
             }

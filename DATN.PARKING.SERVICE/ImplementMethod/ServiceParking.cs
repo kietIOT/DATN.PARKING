@@ -3,17 +3,19 @@ using DATN.PARKING.DLL;
 using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.DLL.Models.Dtos;
 using DATN.PARKING.SERVICE.InterfaceMethod;
+using System.Net.Http;
 
 namespace DATN.PARKING.SERVICE.ImplementMethod
 {
     public class ServiceParking : IServiceParking
     {
         private readonly IUnitOfWork<ParkingContext> _unitOfWork;
-        private readonly IHttpUtils _httpClient;
-        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork, IHttpUtils httpClient)
+        private readonly IHttpClientFactory _httpClientFactory;
+        private const string HttpClientName = "TTOS";
+        public ServiceParking(IUnitOfWork<ParkingContext> unitOfWork, IHttpClientFactory httpClientFactory)
         {
             _unitOfWork = unitOfWork;
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
         public double CalculateTotalAmountForVehicle(int infoId)
@@ -269,11 +271,14 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             throw new NotImplementedException();
         }
-        public async Task SendDataToRegonize(string data)
+        public async Task SendDataToRegonize()
         {
-            var url = $"https://localhost:44386/datn-parking-ai";
-            //data = "SendData";
-            var result = await _httpClient.PostAsync<string>(url, data);
+            var url = $"http://localhost:8080/";
+            var client = _httpClientFactory.CreateClient(HttpClientName);
+            HttpResponseMessage response;
+            response = await client.PostAsync(url, null);
+            var res = await response.Content.ReadAsStringAsync();
+
         }
 
         public void GetAllAreaParking()
