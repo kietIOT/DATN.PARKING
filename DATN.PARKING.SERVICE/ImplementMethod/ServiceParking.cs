@@ -59,12 +59,15 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             }
         }
 
-        public bool SaveCapturedImage(Bitmap image)
+        public bool SaveCapturedImage(Bitmap image, string gate)
         {
             try
             {
+
                 // Đường dẫn lưu trữ ảnh
-                string folderPath = @"C:\Images";
+
+                string folderPath = @$"C:\Images\{gate}";
+               
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
@@ -96,5 +99,131 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             }
         }
 
+        public void AddParkingSession(ParkingSession parkingSession)
+        {
+            try
+            {
+                _unitOfWork.Context.ParkingSessions.Add(parkingSession);
+                _unitOfWork.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw ex;
+            }
+        }
+
+        public ParkingSession GateIn(string? cccd, string? rfid, int? fingerprintData, string licensePlate)
+        {
+            try
+            {
+                var customer = _unitOfWork.Context.Customers.FirstOrDefault(c => c.CCCD == cccd || c.RFID == rfid || c.FingerprintData == fingerprintData);
+
+                // If customer does not exist, create a new customer
+                if (customer == null)
+                {
+                    customer = new Customer
+                    {
+                       
+                        RegistrationDate = DateTime.Now,
+                        CCCD = cccd,    // Optional, can be null
+                        RFID = rfid,    // Optional, can be null
+                        FingerprintData = fingerprintData  // Optional, can be null
+                    };
+
+                    _unitOfWork.Context.Customers.Add(customer);
+                    _unitOfWork.SaveAsync();
+                }
+
+                // Add a vehicle to the customer if not found
+                var vehicle = customer.Vehicles?.FirstOrDefault(v => v.LicensePlate == licensePlate);
+                if (vehicle == null)
+                {
+                    vehicle = new Vehicle
+                    {
+                        LicensePlate = licensePlate,
+                        CustomerId = customer.CustomerId
+                    };
+                    _unitOfWork.Context.Vehicles.Add(vehicle);
+                    _unitOfWork.SaveAsync();
+                }
+
+                // Find an available parking slot
+                var parkingSlot = _unitOfWork.Context.ParkingSlots.FirstOrDefault(s => s.IsOccupied == false || s.IsOccupied == null);
+                if (parkingSlot == null)
+                {
+                    throw new Exception("No available parking slots.");
+                }
+
+                // Create a new ParkingSession
+                var newSession = new ParkingSession
+                {
+                    VehicleId = vehicle.VehicleId,
+                    ParkingSlotId = parkingSlot.SlotId,
+                    EntryTime = DateTime.Now,
+                    IsPaid = false
+                };
+
+                parkingSlot.IsOccupied = true;
+
+                _unitOfWork.Context.ParkingSessions.Add(newSession);
+                _unitOfWork.SaveAsync();
+
+                return newSession;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ParkingSession GateOut(string? cccd, string? rfid, int? fingerprintData, string licensePlate)
+        {
+            try
+            {
+                var customer = _unitOfWork.Context.Customers.FirstOrDefault(c => c.CCCD == cccd || c.RFID == rfid || c.FingerprintData == fingerprintData);
+
+                if (customer == null)
+                {
+                    throw new Exception("Customer not found.");
+                }
+
+                var vehicle = customer.Vehicles.FirstOrDefault();
+                if (vehicle == null)
+                {
+                    throw new Exception("Vehicle not found.");
+                }
+
+                // Find the active parking session for the vehicle
+                var session = _unitOfWork.Context.ParkingSessions
+                    .FirstOrDefault(ps => ps.VehicleId == vehicle.VehicleId && ps.ExitTime == null);
+
+                if (session == null)
+                {
+                    throw new Exception("No active parking session found.");
+                }
+
+                // Calculate the parking fee (e.g., 10 units per hour)
+                var duration = DateTime.Now - session.EntryTime;
+                session.PaymentAmount = (decimal)(duration?.TotalHours ?? 0) * 10; // Example rate
+                session.IsPaid = true;
+                session.ExitTime = DateTime.Now;
+
+                // Free up the parking slot
+                var parkingSlot = _unitOfWork.Context.ParkingSlots
+                    .FirstOrDefault(s => s.SlotId == session.ParkingSlotId);
+
+                if (parkingSlot != null)
+                {
+                    parkingSlot.IsOccupied = false;
+                }
+
+                _unitOfWork.SaveAsync();
+
+                return session;
+            }
+            catch (Exception ex)
+            { throw new Exception(ex.Message); }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
     public interface IHardwareService
     {
         void Servo(string gate);
-        void ServoInit(string portName, int baudRate);
+        void AruduinoInit(string portName, int baudRate);
 
 
         void QrScanInit(string portName, int baud, ref SerialPort port, SerialDataReceivedEventHandler dataReceivedCallback);
@@ -18,6 +18,8 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
 
          string ReadFingerSensor();
-        string ReadBilledAmount();
+
+
+         string ReadBilledAmount();
     }
 }

@@ -7,7 +7,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
     {
         private  SerialPort serialPort;
        
-        public void ServoInit(string portName, int baudRate)
+        public void AruduinoInit(string portName, int baudRate)
         {
             try
             {

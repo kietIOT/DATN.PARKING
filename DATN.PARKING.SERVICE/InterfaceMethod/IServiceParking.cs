@@ -14,10 +14,11 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
         Task<string> SendDataToRegonize(string imageUrl);
 
+        ParkingSession GateIn(string? cccd, string? rfid, int? fingerprintData, string licensePlate);
+        ParkingSession GateOut(string? cccd, string? rfid, int? fingerprintData, string licensePlate);
 
+        bool SaveCapturedImage(Bitmap image,string gate);
 
-        bool SaveCapturedImage(Bitmap image);
-
-
+        void AddParkingSession(ParkingSession parkingSession);
     }
 }
