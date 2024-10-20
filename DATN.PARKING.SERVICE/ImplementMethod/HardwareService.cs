@@ -43,7 +43,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
                 {
                     throw new Exception("Không kết nối được với cổng COM !");
                 }
-                string data = port.ReadLine().Trim();
+                string data = port.ReadExisting().Trim();
                 string splitData = string.Empty;
                 var entity = new Vehicle();
                 if (!string.IsNullOrEmpty(data))

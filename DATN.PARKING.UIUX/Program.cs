@@ -37,7 +37,8 @@ namespace DATN.PARKING.UIUX
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
                     services.AddDbContext<ParkingContext>(options =>
-                        options.UseSqlServer("Data Source=TCIS-SSC-37128D\\SQLEXPRESS; Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True"));
+                        //options.UseSqlServer("Data Source=TCIS-SSC-37128D\\SQLEXPRESS; Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True"));
+                        options.UseSqlServer("Data Source=OBAMA\\SQLEXPRESS; Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True"));
                     services.AddHttpClient();
                     services.AddTransient<IUnitOfWork<ParkingContext>, UnitOfWork<ParkingContext>>();
                     services.AddTransient<IServiceParking, ServiceParking>();

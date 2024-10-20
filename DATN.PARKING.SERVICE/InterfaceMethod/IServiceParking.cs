@@ -1,11 +1,13 @@
 ﻿using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.DLL.Models.Dtos;
 using System.Drawing;
+using System.Net.Sockets;
 
 namespace DATN.PARKING.SERVICE.InterfaceMethod
 {
     public interface IServiceParking
     {
+       
         bool Login(string userName, string password); // đăng nhập
 
 
@@ -20,5 +22,6 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
         bool SaveCapturedImage(Bitmap image,string gate);
 
         void AddParkingSession(ParkingSession parkingSession);
+        void TcpInit();
     }
 }

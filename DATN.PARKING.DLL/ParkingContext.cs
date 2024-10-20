@@ -31,7 +31,7 @@ namespace DATN.PARKING.DLL
             if (!optionsBuilder.IsConfigured)
             {
 
-                optionsBuilder.UseSqlServer("Data Source=TCIS-SSC-37128D\\SQLEXPRESS;Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=OBAMA\\SQLEXPRESS;Initial Catalog=DATN.PARKING;TrustServerCertificate=True;Trusted_Connection=True;");
             }
         }
 

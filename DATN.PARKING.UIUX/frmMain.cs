@@ -3,8 +3,6 @@ using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.SERVICE.InterfaceMethod;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using System.Drawing.Imaging;
-using System.IO;
 using System.IO.Ports;
 
 namespace DATN.PARKING.UIUX
@@ -13,7 +11,7 @@ namespace DATN.PARKING.UIUX
     {
         private readonly IHardwareService _hardwareService;
         private readonly IServiceParking _serviceParking;
-        private SerialPort serialPortIn;
+        private readonly SerialPort serialPortIn;
         private SerialPort serialPortOut;
         private VideoCapture _cameraGateIn;
         private VideoCapture _cameraGateOut;
@@ -28,11 +26,12 @@ namespace DATN.PARKING.UIUX
                 InitializeComponent();
                 _serviceParking = serviceParking;
                 _hardwareService = hardwareService;
+                _serviceParking.TcpInit();
 
           //      _hardwareService.ServoInit("COM3", 9600);
-
-         //       _hardwareService.QrScanInit("COM3", 9600, ref serialPortIn, SerialPortGateIn_DataReceived);
-          //      _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateOut_DataReceived);
+          
+           //     _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateIn_DataReceived);
+              //  _hardwareService.QrScanInit("COM5", 9600, ref serialPortIn, SerialPortGateOut_DataReceived);
             }
             catch (Exception ex)
             {
@@ -67,7 +66,7 @@ namespace DATN.PARKING.UIUX
 
             _serviceParking.AddParkingSession(parkingSesson);
 
-            txtBienSoVao.Text = parkingSesson.Vehicle.LicensePlate.Trim();
+            //txtBienSoVao.Text = parkingSesson.Vehicle.LicensePlate.Trim();
 
 
         }
@@ -115,13 +114,13 @@ namespace DATN.PARKING.UIUX
                 lbGateIn.BringToFront();
                 lbGateOut.BringToFront();
 
-                //_cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
+                _cameraGateIn = new VideoCapture(0); // 0 cho camera mặc định
                 // _cameraGateOut = new VideoCapture(1);
                 _isRunning = true;
 
                 // Tạo một task để xử lý video trong background
 
-                //     Task.Run(() => ProcessVideoCameraGateIn());
+                     Task.Run(() => ProcessVideoCameraGateIn());
                 //     Task.Run(() => ProcessVideoCameraGateOut());
             }
             catch (Exception ex)

@@ -5,13 +5,17 @@ using DATN.PARKING.SERVICE.InterfaceMethod;
 using Newtonsoft.Json;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 
 namespace DATN.PARKING.SERVICE.ImplementMethod
 {
     public class ServiceParking : IServiceParking
     {
+        private TcpListener _server;
+        private bool _isRunning;
         private readonly IUnitOfWork<ParkingContext> _unitOfWork;
         private readonly IHttpClientFactory _httpClientFactory;
         private const string HttpClientName = "TTOS";
@@ -19,9 +23,75 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
         {
             _unitOfWork = unitOfWork;
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+
+
+        }
+        public void TcpInit()
+        {
+            try
+            {
+                _server = new TcpListener(IPAddress.Any, 5000);
+                _server.Start();
+                _isRunning = true;
+                var listenerThread = new Thread(ListenForClients);
+                listenerThread.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public bool Login(string userName, string password)
+        private void ListenForClients()
+        {
+            while (_isRunning)
+            {
+                // Chấp nhận kết nối từ ESP32
+                TcpClient client = _server.AcceptTcpClient();
+
+                // Xử lý kết nối trong một luồng khác
+                var clientThread = new Thread(HandleClientComm);
+                clientThread.Start(client);
+            }
+        }
+        private void HandleClientComm(object client_obj)
+        {
+            TcpClient tcpClient = (TcpClient)client_obj;
+            NetworkStream clientStream = tcpClient.GetStream();
+
+            byte[] message = new byte[4096];
+            int bytesRead;
+
+            while (true)
+            {
+                bytesRead = 0;
+
+                try
+                {
+                    // Đọc dữ liệu từ ESP32
+                    bytesRead = clientStream.Read(message, 0, 4096);
+                }
+                catch
+                {
+                    // Ngắt kết nối
+                    break;
+                }
+
+                if (bytesRead == 0)
+                {
+                    // Kết nối đã đóng
+                    break;
+                }
+
+                // Chuyển đổi dữ liệu nhận được thành chuỗi
+                string receivedData = Encoding.ASCII.GetString(message, 0, bytesRead);
+                Console.WriteLine("Received: " + receivedData);
+            }
+
+            tcpClient.Close();
+        }
+    
+    public bool Login(string userName, string password)
         {
             try
             {
