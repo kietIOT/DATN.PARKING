@@ -23,5 +23,13 @@ namespace DATN.PARKING.SERVICE.InterfaceMethod
 
         void AddParkingSession(ParkingSession parkingSession);
         void TcpInit();
+
+
+        Customer GetCustomerInfo(string? cccd, string? rfid, int? fingerprintData);
+        void AddCustomer(Customer customer);
+        void AddVehicle(Vehicle vehicle);
+        bool ParkingSlotAvailble(ParkingSlot parkingSlot);
+        void AddParkingSlot(ParkingSlot parkingSlot);
+        Vehicle GetVehicleByPlateLicense(Customer customer,string licensePlate);
     }
 }

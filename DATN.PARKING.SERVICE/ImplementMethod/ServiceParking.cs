@@ -91,7 +91,7 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             tcpClient.Close();
         }
     
-    public bool Login(string userName, string password)
+        public bool Login(string userName, string password)
         {
             try
             {
@@ -294,6 +294,85 @@ namespace DATN.PARKING.SERVICE.ImplementMethod
             }
             catch (Exception ex)
             { throw new Exception(ex.Message); }
+        }
+
+        public Customer GetCustomerInfo(string? cccd, string? rfid, int? fingerprintData)
+        {
+            try
+            {
+                var customer = _unitOfWork.Context.Customers.FirstOrDefault(c => c.CCCD == cccd || c.RFID == rfid || c.FingerprintData == fingerprintData);
+                if (customer == null)
+                    return null;
+                return customer;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AddCustomer(Customer customer)
+        {
+            try
+            {
+                _unitOfWork.Context.Customers.Add(customer);
+                _unitOfWork.SaveAsync();
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+        }
+
+        public void AddVehicle(Vehicle vehicle)
+        {
+            try
+            {
+                _unitOfWork.Context.Vehicles.Add(vehicle);
+                _unitOfWork.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool ParkingSlotAvailble(ParkingSlot parkingSlot)
+        {
+            try
+            {
+                var x = _unitOfWork.Context.ParkingSlots.FirstOrDefault(s => s.IsOccupied == false || s.IsOccupied == null);
+                if (x == null) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AddParkingSlot(ParkingSlot parkingSlot)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Vehicle GetVehicleByPlateLicense(Customer customer, string licensePlate)
+        {
+            try
+            {
+                var vehicle = customer.Vehicles?.FirstOrDefault(v => v.LicensePlate == licensePlate);
+                if (vehicle == null) return null;   
+                return vehicle;
+            }
+            catch(Exception ex) 
+                {  throw ex;}
         }
     }
 }

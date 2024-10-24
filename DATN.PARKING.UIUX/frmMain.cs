@@ -1,6 +1,7 @@
 ﻿using DATN.PARKING.DLL;
 using DATN.PARKING.DLL.Models.DbTable;
 using DATN.PARKING.SERVICE.InterfaceMethod;
+using DevExpress.Xpo;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System.IO.Ports;
@@ -53,11 +54,14 @@ namespace DATN.PARKING.UIUX
             parkingSesson.EntryTime = DateTime.Now;
             parkingSesson.IsPaid = true;
             parkingSesson.Vehicle = new Vehicle();
-            parkingSesson.Vehicle.Customer = new Customer();    
-            parkingSesson.Vehicle.Customer.CCCD = data.Trim();
+            var customer = _serviceParking.GetCustomerInfo(data, null, null);
+            if (customer == null) 
+            {
+                parkingSesson.Vehicle.Customer = new Customer();
+                parkingSesson.Vehicle.Customer.CCCD = data.Trim();
+                parkingSesson.Vehicle.Customer.CCCD = data.Trim();
+            }
             
-
-
             Invoke(new MethodInvoker(delegate
             {
 
@@ -314,7 +318,8 @@ namespace DATN.PARKING.UIUX
                     {
                         MessageBox.Show($"Không đọc được biển số xe, vui lòng thử lại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    parkingSession.Vehicle.LicensePlate = plateLicense;
+
+                    
 
                 }
                 else
@@ -334,7 +339,7 @@ namespace DATN.PARKING.UIUX
             }
         }
 
-        private void GateOut()
+        private async void GateOut(ParkingSession parkingSession)
         {
             try
             {
@@ -366,6 +371,12 @@ namespace DATN.PARKING.UIUX
                     {
                         MessageBox.Show($"Đã xảy ra lỗi khi lưu ảnh", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    var plateLicense = await _serviceParking.SendDataToRegonize("");
+                    if (plateLicense.IsEmpty())
+                    {
+                        MessageBox.Show($"Không đọc được biển số xe, vui lòng thử lại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    parkingSession.Vehicle.LicensePlate = plateLicense;
 
                 }
                 else
